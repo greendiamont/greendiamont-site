@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Diamont — Preserve 1m² de Mata Atlântica</title>
+<meta name="description" content="Certificado vitalício de preservação ambiental. Preserve 1m² de Mata Atlântica registrado em blockchain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #1a3a2a;
+    --green-mid: #2d6a4f;
+    --green-light: #52b788;
+    --green-pale: #b7e4c7;
+    --gold: #d4a843;
+    --gold-light: #f0d080;
+    --cream: #f8f5ef;
+    --white: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-muted: #5a6a60;
+    --border: rgba(45,106,79,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── LANG SWITCHER ── */
+  .lang-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: var(--green-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+  }
+
+  .lang-bar .logo-small {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .lang-switcher {
+    display: flex;
+    gap: 6px;
+  }
+
+  .lang-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.6);
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .lang-btn.active, .lang-btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--green-dark);
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--green-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 50px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(82,183,136,0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(212,168,67,0.08) 0%, transparent 60%);
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* IMAGEM DA FLORESTA — troque o src abaixo */
+  .hero-img-wrap {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 45%;
+    overflow: hidden;
+  }
+
+  .hero-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+  }
+
+  .hero-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--green-dark) 0%, transparent 50%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 60px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-text {}
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212,168,67,0.15);
+    border: 1px solid rgba(212,168,67,0.3);
+    color: var(--gold-light);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .hero-title em {
+    color: var(--green-light);
+    font-style: italic;
+  }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--gold-light);
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+
+  .hero-desc {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--green-dark);
+    padding: 14px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    padding: 14px 32px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.25);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--green-light);
+    color: var(--green-light);
+  }
+
+  /* CERT CARD no hero */
+  .hero-cert {
+    display: flex;
+    justify-content: center;
+  }
+
+  .cert-preview {
+    background: linear-gradient(145deg, #1e4033, #0d2018);
+    border: 1px solid rgba(212,168,67,0.4);
+    border-radius: 12px;
+    padding: 32px;
+    width: 320px;
+    position: relative;
+    box-shadow: 0 0 60px rgba(82,183,136,0.15);
+  }
+
+  .cert-preview::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px solid rgba(212,168,67,0.15);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .cert-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .cert-diamond {
+    text-align: center;
+    margin: 16px 0;
+  }
+
+  .cert-diamond svg {
+    width: 60px; height: 60px;
+  }
+
+  .cert-title-sm {
+    font-family: 'Playfair Display', serif;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.85rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 6px;
+  }
+
+  .cert-name {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold-light);
+    font-size: 1.2rem;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .cert-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .cert-info-item {
+    text-align: center;
+  }
+
+  .cert-info-label {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 3px;
+  }
+
+  .cert-info-value {
+    color: var(--green-pale);
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .cert-hash {
+    background: rgba(0,0,0,0.3);
+    border-radius: 4px;
+    padding: 8px 12px;
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .cert-hash-label {
+    color: rgba(255,255,255,0.3);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .cert-hash-val {
+    color: var(--green-light);
+    font-size: 0.65rem;
+    font-family: monospace;
+    word-break: break-all;
+    margin-top: 2px;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--green-mid);
+    padding: 32px 40px;
+  }
+
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    text-align: center;
+  }
+
+  .stat-item {}
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+
+  .stat-label {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.8rem;
+    margin-top: 4px;
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 90px 40px;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--green-mid);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    color: var(--green-dark);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .section-title em {
+    color: var(--green-mid);
+    font-style: italic;
+  }
+
+  .section-desc {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 600px;
+    margin-bottom: 50px;
+  }
+
+  /* ── ABOUT / IMPACTO ── */
+  .about {
+    background: var(--white);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-img {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: var(--green-pale);
+  }
+
+  /* IMAGEM DA MATA — substitua o src */
+  .about-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--green-mid);
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .about-img-placeholder svg {
+    width: 64px; height: 64px;
+    opacity: 0.5;
+  }
+
+  .about-img-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(26,58,42,0.85);
+    color: rgba(255,255,255,0.8);
+    font-size: 0.75rem;
+    padding: 10px 16px;
+    text-align: center;
+  }
+
+  .impact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 36px;
+  }
+
+  .impact-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .impact-icon {
+    width: 40px; height: 40px;
+    background: var(--green-pale);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .impact-icon svg {
+    width: 20px; height: 20px;
+  }
+
+  .impact-text h4 {
+    color: var(--green-dark);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 3px;
+  }
+
+  .impact-text p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  /* ── COMO FUNCIONA ── */
+  .how {
+    background: var(--cream);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+  }
+
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 36px; left: 60px; right: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green-pale), transparent);
+  }
+
+  .step-card {
+    text-align: center;
+    padding: 32px 20px;
+    background: var(--white);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  .step-num {
+    width: 52px; height: 52px;
+    background: var(--green-dark);
+    color: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-title {
+    font-weight: 500;
+    color: var(--green-dark);
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    color: var(--text-muted);
+    font-size: 0.83rem;
+    line-height: 1.6;
+  }
+
+  /* ── CERTIFICADO ── */
+  .certificate {
+    background: var(--green-dark);
+    color: var(--white);
+  }
+
+  .certificate .section-eyebrow {
+    color: var(--gold-light);
+  }
+
+  .certificate .section-title {
+    color: var(--white);
+  }
+
+  .certificate .section-title em {
+    color: var(--green-light);
+  }
+
+  .certificate .section-desc {
+    color: rgba(255,255,255,0.65);
+  }
+
+  .cert-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 16px;
+  }
+
+  .cert-feat {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(212,168,67,0.2);
+    border-radius: 8px;
+    padding: 28px 24px;
+  }
+
+  .cert-feat-icon {
+    width: 44px; height: 44px;
+    background: rgba(212,168,67,0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .cert-feat-icon svg {
+    width: 22px; height: 22px;
+    stroke: var(--gold);
+  }
+
+  .cert-feat h4 {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .cert-feat p {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.83rem;
+    line-height: 1.6;
+  }
+
+  /* ── LEGAL ── */
+  .legal {
+    background: var(--white);
+  }
+
+  .legal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .law-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .law-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--cream);
+  }
+
+  .law-tag {
+    background: var(--green-dark);
+    color: var(--gold);
+    font-size: 0.65rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .law-text h4 {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--green-dark);
+    margin-bottom: 4px;
+  }
+
+  .law-text p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── DEPOIMENTOS / COMUNIDADE ── */
+  .community {
+    background: var(--cream);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .testimonial {
+    background: var(--white);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+  }
+
+  .testimonial-stars {
+    color: var(--gold);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+
+  .testimonial-text {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .author-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--green-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: var(--green-mid);
+    font-weight: 700;
+  }
+
+  .author-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--green-dark);
+  }
+
+  .author-location {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* ── BLOCKCHAIN ── */
+  .blockchain {
+    background: var(--white);
+  }
+
+  .blockchain-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .blockchain-visual {
+    background: #0d1f17;
+    border-radius: 12px;
+    padding: 32px;
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: var(--green-light);
+    line-height: 2;
+    border: 1px solid rgba(82,183,136,0.2);
+  }
+
+  .bc-line-muted { color: rgba(255,255,255,0.3); }
+  .bc-line-gold { color: var(--gold); }
+  .bc-line-white { color: rgba(255,255,255,0.85); }
+
+  /* ── PREÇO / COMPRAR ── */
+  .pricing {
+    background: var(--green-dark);
+  }
+
+  .pricing .section-eyebrow { color: var(--gold-light); }
+  .pricing .section-title { color: var(--white); }
+  .pricing .section-title em { color: var(--green-light); }
+  .pricing .section-desc { color: rgba(255,255,255,0.6); }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .pricing-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212,168,67,0.3);
+  }
+
+  .pricing-card.featured {
+    background: rgba(212,168,67,0.08);
+    border-color: var(--gold);
+    position: relative;
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--green-dark);
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 4px 16px;
+    border-radius: 20px;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
+  .pricing-name {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+
+  .pricing-qty {
+    font-family: 'Playfair Display', serif;
+    color: var(--green-light);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .pricing-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--white);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .pricing-period {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.75rem;
+    margin-bottom: 28px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin-bottom: 28px;
+    text-align: left;
+  }
+
+  .pricing-features li {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.83rem;
+    padding: 6px 0;
+    padding-left: 22px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--green-light);
+    font-size: 0.75rem;
+  }
+
+  .btn-buy {
+    display: block;
+    width: 100%;
+    background: var(--gold);
+    color: var(--green-dark);
+    padding: 14px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-buy:hover {
+    background: var(--gold-light);
+  }
+
+  .btn-buy-outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.8);
+  }
+
+  .btn-buy-outline:hover {
+    border-color: var(--green-light);
+    color: var(--green-light);
+    background: transparent;
+  }
+
+  /* ── FAQ ── */
+  .faq {
+    background: var(--cream);
+  }
+
+  .faq-list {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-q {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 500;
+    color: var(--green-dark);
+    transition: background 0.2s;
+  }
+
+  .faq-q:hover {
+    background: var(--cream);
+  }
+
+  .faq-q-icon {
+    width: 20px; height: 20px;
+    background: var(--green-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    color: var(--green-mid);
+    transition: transform 0.2s;
+  }
+
+  .faq-a {
+    padding: 0 24px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.75;
+  }
+
+  .faq-a.open {
+    max-height: 200px;
+    padding: 0 24px 20px;
+  }
+
+  /* ── CONTATO ── */
+  .contact {
+    background: var(--white);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-info-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .contact-info-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .contact-icon {
+    width: 40px; height: 40px;
+    background: var(--green-pale);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-icon svg {
+    width: 18px; height: 18px;
+    stroke: var(--green-mid);
+  }
+
+  .contact-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+
+  .contact-value {
+    font-size: 0.93rem;
+    color: var(--green-dark);
+    font-weight: 500;
+  }
+
+  /* FORM */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--green-dark);
+    letter-spacing: 0.03em;
+  }
+
+  .form-input, .form-textarea, .form-select {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    background: var(--cream);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--green-mid);
+    background: var(--white);
+  }
+
+  .form-textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green-dark);
+    padding: 60px 40px 30px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 30px;
+  }
+
+  .footer-brand .logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .footer-brand p {
+    font-size: 0.83rem;
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .footer-col h5 {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.83rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 0.83rem;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--gold-light); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.75rem;
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .footer-legal a {
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+  }
+
+  .polygon-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(130,71,229,0.15);
+    border: 1px solid rgba(130,71,229,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    color: #a78bfa;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-cert { display: none; }
+    .hero-img-wrap { display: none; }
+    .about-grid, .legal-grid, .blockchain-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .steps-grid::before { display: none; }
+    .cert-features { grid-template-columns: 1fr 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .pricing-cards { grid-template-columns: 1fr; }
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .lang-bar { padding: 10px 20px; }
+    section { padding: 60px 20px; }
+  }
+
+  @media (max-width: 600px) {
+    .steps-grid { grid-template-columns: 1fr; }
+    .cert-features { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .hero-content { padding: 40px 20px; }
+  }
+
+  /* ── LANG CONTENT ── */
+  [data-lang] { display: none; }
+  [data-lang].active { display: block; }
+  [data-lang-inline] { display: none; }
+  [data-lang-inline].active { display: inline; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR / LANG BAR -->
+<nav class="lang-bar">
+  <span class="logo-small">Green Diamont</span>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('es')">ES</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-img-wrap">
+    <!-- TROQUE a imagem abaixo: coloque mata-atlantica.jpg na mesma pasta -->
+    <img src="images/hero-forest.jpg" alt="Mata Atlântica" onerror="this.style.display='none'">
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span data-lang="pt" class="active">Certificado Ambiental Vitalício</span>
+        <span data-lang-inline="en">Lifetime Environmental Certificate</span>
+        <span data-lang-inline="es">Certificado Ambiental Vitalicio</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span data-lang="pt" class="active">Preserve <em>1m²</em> de<br>Mata Atlântica</span>
+        <span data-lang="en">Preserve <em>1m²</em> of<br>Atlantic Forest</span>
+        <span data-lang="es">Preserve <em>1m²</em> de<br>Mata Atlántica</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        <span data-lang="pt" class="active">Para sempre. No blockchain. Em seu nome.</span>
+        <span data-lang="en">Forever. On blockchain. In your name.</span>
+        <span data-lang="es">Para siempre. En blockchain. A tu nombre.</span>
+      </p>
+
+      <p class="hero-desc">
+        <span data-lang="pt" class="active">Receba um certificado nominal e vitalício, registrado na blockchain Polygon, com respaldo nas leis ambientais brasileiras. Seu metro quadrado protegido para sempre.</span>
+        <span data-lang="en">Receive a lifetime certificate in your name, recorded on the Polygon blockchain, backed by Brazilian environmental law. Your square meter protected forever.</span>
+        <span data-lang="es">Recibe un certificado nominal y vitalicio, registrado en la blockchain Polygon, respaldado por las leyes ambientales brasileñas. Tu metro cuadrado protegido para siempre.</span>
+      </p>
+
+      <div class="hero-cta">
+        <a href="#pricing" class="btn-primary">
+          <span data-lang="pt" class="active">Preservar Agora</span>
+          <span data-lang-inline="en">Preserve Now</span>
+          <span data-lang-inline="es">Preservar Ahora</span>
+        </a>
+        <a href="#how" class="btn-secondary">
+          <span data-lang="pt" class="active">Como funciona</span>
+          <span data-lang-inline="en">How it works</span>
+          <span data-lang-inline="es">Cómo funciona</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- CERT PREVIEW CARD -->
+    <div class="hero-cert">
+      <div class="cert-preview">
+        <div class="cert-logo">✦ Green Diamont ✦</div>
+        <div class="cert-diamond">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="30,4 56,20 56,40 30,56 4,40 4,20" fill="none" stroke="#d4a843" stroke-width="1.5"/>
+            <polygon points="30,12 48,22 48,38 30,48 12,38 12,22" fill="rgba(82,183,136,0.15)" stroke="#52b788" stroke-width="1"/>
+            <text x="30" y="35" text-anchor="middle" font-family="serif" font-size="14" fill="#d4a843">GD</text>
+          </svg>
+        </div>
+        <div class="cert-title-sm">
+          <span data-lang="pt" class="active">Certificado de Preservação Ambiental</span>
+          <span data-lang="en">Environmental Preservation Certificate</span>
+          <span data-lang="es">Certificado de Preservación Ambiental</span>
+        </div>
+        <div class="cert-name">Seu Nome Aqui</div>
+        <div class="cert-info">
+          <div class="cert-info-item">
+            <div class="cert-info-label">Área</div>
+            <div class="cert-info-value">1 m²</div>
+          </div>
+          <div class="cert-info-item">
+            <div class="cert-info-label">Bioma</div>
+            <div class="cert-info-value">Mata Atlântica</div>
+          </div>
+          <div class="cert-info-item">
+            <div class="cert-info-label">Rede</div>
+            <div class="cert-info-value">Polygon</div>
+          </div>
+          <div class="cert-info-item">
+            <div class="cert-info-label">Token</div>
+            <div class="cert-info-value">ERC-721</div>
+          </div>
+        </div>
+        <div class="cert-hash">
+          <div class="cert-hash-label">Blockchain Hash</div>
+          <div class="cert-hash-val">0x799Fb383...3161eF</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS ══ -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num">7%</div>
+      <div class="stat-label" data-lang="pt" style="display:block">da Mata Atlântica original resta</div>
+      <div class="stat-label" data-lang="en">of original Atlantic Forest remains</div>
+      <div class="stat-label" data-lang="es">del bosque original queda</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label" data-lang="pt" style="display:block">Validade do certificado</div>
+      <div class="stat-label" data-lang="en">Certificate validity</div>
+      <div class="stat-label" data-lang="es">Validez del certificado</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label" data-lang="pt" style="display:block">Rastreável na blockchain</div>
+      <div class="stat-label" data-lang="en">Traceable on blockchain</div>
+      <div class="stat-label" data-lang="es">Rastreable en blockchain</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Lei</div>
+      <div class="stat-label" data-lang="pt" style="display:block">Respaldo nas leis ambientais brasileiras</div>
+      <div class="stat-label" data-lang="en">Backed by Brazilian environmental law</div>
+      <div class="stat-label" data-lang="es">Respaldado por ley ambiental brasileña</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ABOUT / IMPACTO ══ -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img">
+        <!-- TROQUE pela imagem da mata: images/mata-atlantica.jpg -->
+        <img src="images/mata-atlantica.jpg" alt="Mata Atlântica" onerror="this.style.display='none'">
+        <div class="about-img-placeholder">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M32 8 C20 8 12 20 12 30 C12 44 24 52 32 56 C40 52 52 44 52 30 C52 20 44 8 32 8Z"/>
+            <path d="M32 20 L32 44 M20 32 L44 32"/>
+          </svg>
+          <span>Adicione sua imagem da Mata Atlântica<br><small>images/mata-atlantica.jpg</small></span>
+        </div>
+        <div class="about-img-label">Mata Atlântica — Sul do Brasil</div>
+      </div>
+
+      <div class="about-text">
+        <div class="section-eyebrow">
+          <span data-lang="pt" style="display:inline">O bioma mais ameaçado do Brasil</span>
+          <span data-lang="en">Brazil's most threatened biome</span>
+          <span data-lang="es">El bioma más amenazado de Brasil</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang="pt" style="display:block">Seu impacto é <em>real</em> e permanente</span>
+          <span data-lang="en">Your impact is <em>real</em> and permanent</span>
+          <span data-lang="es">Tu impacto es <em>real</em> y permanente</span>
+        </h2>
+
+        <ul class="impact-list">
+          <li class="impact-item">
+            <div class="impact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" stroke-width="2">
+                <path d="M12 2a8 8 0 0 1 8 8c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 8-8z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="impact-text">
+              <h4><span data-lang="pt" style="display:inline">Área física preservada</span><span data-lang="en">Physically preserved area</span><span data-lang="es">Área físicamente preservada</span></h4>
+              <p><span data-lang="pt" style="display:inline">Seu certificado corresponde a 1m² real de floresta preservada no Sul do Brasil.</span><span data-lang="en">Your certificate corresponds to 1 real m² of preserved forest in southern Brazil.</span><span data-lang="es">Tu certificado corresponde a 1m² real de bosque preservado en el sur de Brasil.</span></p>
+            </div>
+          </li>
+          <li class="impact-item">
+            <div class="impact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="3"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="impact-text">
+              <h4><span data-lang="pt" style="display:inline">Certificado nominal e intransferível</span><span data-lang="en">Nominal and non-transferable certificate</span><span data-lang="es">Certificado nominal e intransferible</span></h4>
+              <p><span data-lang="pt" style="display:inline">Token Soulbound ERC-721 — ligado ao seu endereço para sempre.</span><span data-lang="en">Soulbound ERC-721 token — tied to your address forever.</span><span data-lang="es">Token Soulbound ERC-721 — vinculado a tu dirección para siempre.</span></p>
+            </div>
+          </li>
+          <li class="impact-item">
+            <div class="impact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="impact-text">
+              <h4><span data-lang="pt" style="display:inline">Respaldo legal brasileiro</span><span data-lang="en">Brazilian legal backing</span><span data-lang="es">Respaldo legal brasileño</span></h4>
+              <p><span data-lang="pt" style="display:inline">Fundamentado no Código Florestal e legislação de PSA vigente.</span><span data-lang="en">Based on the Forest Code and current PSA legislation.</span><span data-lang="es">Fundamentado en el Código Forestal y legislación PSA vigente.</span></p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMO FUNCIONA ══ -->
+<section class="how" id="how">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <span data-lang="pt" style="display:inline">Simples e transparente</span>
+      <span data-lang="en">Simple and transparent</span>
+      <span data-lang="es">Simple y transparente</span>
+    </div>
+    <h2 class="section-title">
+      <span data-lang="pt" style="display:block">Como <em>funciona</em></span>
+      <span data-lang="en">How it <em>works</em></span>
+      <span data-lang="es">Cómo <em>funciona</em></span>
+    </h2>
+    <p class="section-desc">
+      <span data-lang="pt" style="display:inline">Em minutos você tem seu certificado em mãos, registrado para sempre na blockchain.</span>
+      <span data-lang="en">In minutes you have your certificate, permanently recorded on the blockchain.</span>
+      <span data-lang="es">En minutos tienes tu certificado, registrado permanentemente en la blockchain.</span>
+    </p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title"><span data-lang="pt" style="display:inline">Escolha sua área</span><span data-lang="en">Choose your area</span><span data-lang="es">Elige tu área</span></div>
+        <div class="step-desc"><span data-lang="pt" style="display:inline">Selecione 1m², 5m² ou um pacote maior de Mata Atlântica para preservar.</span><span data-lang="en">Select 1m², 5m² or a larger package of Atlantic Forest to preserve.</span><span data-lang="es">Selecciona 1m², 5m² o un paquete mayor de Mata Atlántica para preservar.</span></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title"><span data-lang="pt" style="display:inline">Realize o pagamento</span><span data-lang="en">Make your payment</span><span data-lang="es">Realiza el pago</span></div>
+        <div class="step-desc"><span data-lang="pt" style="display:inline">Pague com cartão de crédito, Pix ou outros métodos. 100% seguro.</span><span data-lang="en">Pay by credit card, Pix or other methods. 100% secure.</span><span data-lang="es">Paga con tarjeta de crédito, Pix u otros métodos. 100% seguro.</span></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title"><span data-lang="pt" style="display:inline">Mint na blockchain</span><span data-lang="en">Blockchain mint</span><span data-lang="es">Mint en blockchain</span></div>
+        <div class="step-desc"><span data-lang="pt" style="display:inline">Seu certificado é registrado automaticamente na rede Polygon como NFT Soulbound.</span><span data-lang="en">Your certificate is automatically registered on the Polygon network as a Soulbound NFT.</span><span data-lang="es">Tu certificado se registra automáticamente en la red Polygon como NFT Soulbound.</span></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-title"><span data-lang="pt" style="display:inline">Receba seu certificado</span><span data-lang="en">Receive your certificate</span><span data-lang="es">Recibe tu certificado</span></div>
+        <div class="step-desc"><span data-lang="pt" style="display:inline">PDF oficial e link de verificação blockchain enviados para seu e-mail em minutos.</span><span data-lang="en">Official PDF and blockchain verification link sent to your email in minutes.</span><span data-lang="es">PDF oficial y enlace de verificación blockchain enviados a tu email en minutos.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CERTIFICADO ══ -->
+<section class="certificate" id="certificate">
+  <div class="section-inner">
+    <div class="section-eyebrow">Blockchain · NFT · Soulbound</div>
+    <h2 class="section-title">
+      <span data-lang="pt" style="display:block">Um certificado para <em>toda a vida</em></span>
+      <span data-lang="en">A certificate for <em>a lifetime</em></span>
+      <span data-lang="es">Un certificado para <em>toda la vida</em></span>
+    </h2>
+    <p class="section-desc">
+      <span data-lang="pt" style="display:inline">Tecnologia Soulbound significa que o token é permanentemente vinculado a você — não pode ser vendido, transferido ou perdido.</span>
+      <span data-lang="en">Soulbound technology means the token is permanently linked to you — it cannot be sold, transferred or lost.</span>
+      <span data-lang="es">La tecnología Soulbound significa que el token está permanentemente vinculado a ti — no puede ser vendido, transferido ni perdido.</span>
+    </p>
+
+    <div class="cert-features">
+      <div class="cert-feat">
+        <div class="cert-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h4><span data-lang="pt" style="display:inline">Imutável</span><span data-lang="en">Immutable</span><span data-lang="es">Inmutable</span></h4>
+        <p><span data-lang="pt" style="display:inline">Registrado na blockchain Polygon, nenhuma entidade pode alterar ou cancelar seu certificado.</span><span data-lang="en">Recorded on the Polygon blockchain, no entity can alter or cancel your certificate.</span><span data-lang="es">Registrado en la blockchain Polygon, ninguna entidad puede alterar o cancelar tu certificado.</span></p>
+      </div>
+      <div class="cert-feat">
+        <div class="cert-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+        </div>
+        <h4><span data-lang="pt" style="display:inline">Verificável 24/7</span><span data-lang="en">Verifiable 24/7</span><span data-lang="es">Verificable 24/7</span></h4>
+        <p><span data-lang="pt" style="display:inline">Qualquer pessoa pode verificar a autenticidade do seu certificado a qualquer momento via PolygonScan.</span><span data-lang="en">Anyone can verify the authenticity of your certificate at any time via PolygonScan.</span><span data-lang="es">Cualquiera puede verificar la autenticidad de tu certificado en cualquier momento via PolygonScan.</span></p>
+      </div>
+      <div class="cert-feat">
+        <div class="cert-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+            <path d="M16 3H8l-2 4h12l-2-4z"/>
+            <path d="M12 12v.01"/>
+          </svg>
+        </div>
+        <h4><span data-lang="pt" style="display:inline">Metadados IPFS</span><span data-lang="en">IPFS Metadata</span><span data-lang="es">Metadatos IPFS</span></h4>
+        <p><span data-lang="pt" style="display:inline">Imagens, coordenadas GPS e dados do certificado armazenados de forma descentralizada no IPFS.</span><span data-lang="en">Images, GPS coordinates and certificate data stored in decentralized IPFS.</span><span data-lang="es">Imágenes, coordenadas GPS y datos del certificado almacenados de forma descentralizada en IPFS.</span></p>
+      </div>
+      <div class="cert-feat">
+        <div class="cert-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+            <path d="M14 2v6h6M9 15l2 2 4-4"/>
+          </svg>
+        </div>
+        <h4><span data-lang="pt" style="display:inline">PDF Oficial</span><span data-lang="en">Official PDF</span><span data-lang="es">PDF Oficial</span></h4>
+        <p><span data-lang="pt" style="display:inline">Certificado em PDF com QR code, hash blockchain e dados da área preservada para download imediato.</span><span data-lang="en">PDF certificate with QR code, blockchain hash and preserved area data for immediate download.</span><span data-lang="es">Certificado en PDF con código QR, hash blockchain y datos del área preservada para descarga inmediata.</span></p>
+      </div>
+      <div class="cert-feat">
+        <div class="cert-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <path d="M9 22V12h6v10"/>
+          </svg>
+        </div>
+        <h4><span data-lang="pt" style="display:inline">Presente perfeito</span><span data-lang="en">Perfect gift</span><span data-lang="es">Regalo perfecto</span></h4>
+        <p><span data-lang="pt" style="display:inline">Presenteie amigos e familiares com um metro de floresta — um presente eterno e com propósito.</span><span data-lang="en">Gift friends and family a meter of forest — an eternal, purposeful present.</span><span data-lang="es">Regala a amigos y familiares un metro de bosque — un regalo eterno y con propósito.</span></p>
+      </div>
+      <div class="cert-feat">
+        <div class="cert-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h4><span data-lang="pt" style="display:inline">Escalável</span><span data-lang="en">Scalable</span><span data-lang="es">Escalable</span></h4>
+        <p><span data-lang="pt" style="display:inline">Preserve mais m² ao longo do tempo — cada certificado adicional vai compondo seu legado ambiental.</span><span data-lang="en">Preserve more m² over time — each additional certificate adds to your environmental legacy.</span><span data-lang="es">Preserva más m² con el tiempo — cada certificado adicional suma a tu legado ambiental.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LEGAL ══ -->
+<section class="legal" id="legal">
+  <div class="section-inner">
+    <div class="legal-grid">
+      <div>
+        <div class="section-eyebrow">
+          <span data-lang="pt" style="display:inline">Segurança jurídica</span>
+          <span data-lang="en">Legal security</span>
+          <span data-lang="es">Seguridad jurídica</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang="pt" style="display:block">Respaldo nas leis <em>ambientais</em> brasileiras</span>
+          <span data-lang="en">Backed by Brazilian <em>environmental</em> laws</span>
+          <span data-lang="es">Respaldado por leyes <em>ambientales</em> brasileñas</span>
+        </h2>
+        <p class="section-desc" style="margin-bottom: 0">
+          <span data-lang="pt" style="display:inline">O Green Diamont é estruturado como certificado de impacto ambiental — não como ativo financeiro — com base na legislação vigente.</span>
+          <span data-lang="en">Green Diamont is structured as an environmental impact certificate — not a financial asset — based on current legislation.</span>
+          <span data-lang="es">Green Diamont está estructurado como certificado de impacto ambiental — no como activo financiero — con base en la legislación vigente.</span>
+        </p>
+      </div>
+
+      <div class="law-cards">
+        <div class="law-card">
+          <div class="law-tag">Lei 12.651/2012</div>
+          <div class="law-text">
+            <h4>Código Florestal Brasileiro</h4>
+            <p><span data-lang="pt" style="display:inline">Define proteção das áreas de preservação permanente e reservas legais.</span><span data-lang="en">Defines protection of permanent preservation areas and legal reserves.</span><span data-lang="es">Define la protección de las áreas de preservación permanente y reservas legales.</span></p>
+          </div>
+        </div>
+        <div class="law-card">
+          <div class="law-tag">Lei 14.119/2021</div>
+          <div class="law-text">
+            <h4>Política Nacional de PSA</h4>
+            <p><span data-lang="pt" style="display:inline">Institui a Política Nacional de Pagamento por Serviços Ambientais.</span><span data-lang="en">Establishes the National Policy on Payment for Environmental Services.</span><span data-lang="es">Instituye la Política Nacional de Pago por Servicios Ambientales.</span></p>
+          </div>
+        </div>
+        <div class="law-card">
+          <div class="law-tag">Lei 15.042/2024</div>
+          <div class="law-text">
+            <h4><span data-lang="pt" style="display:inline">Mercado Regulado de Carbono</span><span data-lang="en">Regulated Carbon Market</span><span data-lang="es">Mercado Regulado de Carbono</span></h4>
+            <p><span data-lang="pt" style="display:inline">Marco legal do mercado brasileiro de carbono, promulgado em 2024.</span><span data-lang="en">Legal framework of the Brazilian carbon market, enacted in 2024.</span><span data-lang="es">Marco legal del mercado brasileño de carbono, promulgado en 2024.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BLOCKCHAIN ══ -->
+<section class="blockchain" id="blockchain">
+  <div class="section-inner">
+    <div class="blockchain-grid">
+      <div>
+        <div class="section-eyebrow">Polygon · ERC-721 · Soulbound</div>
+        <h2 class="section-title">
+          <span data-lang="pt" style="display:block">Tecnologia que <em>não mente</em></span>
+          <span data-lang="en">Technology that <em>doesn't lie</em></span>
+          <span data-lang="es">Tecnología que <em>no miente</em></span>
+        </h2>
+        <p class="section-desc">
+          <span data-lang="pt" style="display:inline">Cada certificado é um token único na rede Polygon — a blockchain mais sustentável do mundo — com consumo de energia 99,95% menor que o Bitcoin.</span>
+          <span data-lang="en">Each certificate is a unique token on the Polygon network — the world's most sustainable blockchain — with 99.95% less energy consumption than Bitcoin.</span>
+          <span data-lang="es">Cada certificado es un token único en la red Polygon — la blockchain más sostenible del mundo — con 99,95% menos consumo de energía que Bitcoin.</span>
+        </p>
+        <a href="https://polygonscan.com/address/0x799Fb383692fc580D32ae77CA00DC72A763161eF" target="_blank" class="btn-primary" style="text-decoration:none">
+          <span data-lang="pt" style="display:inline">Ver no PolygonScan</span>
+          <span data-lang-inline="en">View on PolygonScan</span>
+          <span data-lang-inline="es">Ver en PolygonScan</span>
+        </a>
+      </div>
+
+      <div class="blockchain-visual">
+        <div class="bc-line-muted">// GreenDiamont.sol — Polygon Mainnet</div>
+        <div class="bc-line-muted">// Contract: 0x799Fb383...3161eF</div>
+        <br>
+        <div class="bc-line-gold">function mint(</div>
+        <div style="padding-left:20px"><span class="bc-line-white">address </span><span style="color:#52b788">recipient</span><span class="bc-line-muted">,</span></div>
+        <div style="padding-left:20px"><span class="bc-line-white">string  </span><span style="color:#52b788">metadataURI</span></div>
+        <div class="bc-line-gold">) external onlyOwner {</div>
+        <div style="padding-left:20px" class="bc-line-muted">// Soulbound: não transferível</div>
+        <div style="padding-left:20px"><span style="color:#52b788">_safeMint</span><span class="bc-line-white">(recipient, tokenId);</span></div>
+        <div style="padding-left:20px"><span style="color:#52b788">_setTokenURI</span><span class="bc-line-white">(tokenId, metadataURI);</span></div>
+        <div class="bc-line-gold">}</div>
+        <br>
+        <div class="bc-line-muted">// Transfer bloqueada — art. ERC-5114</div>
+        <div class="bc-line-gold">function _transfer</div>
+        <div style="padding-left:20px" class="bc-line-white">→ <span style="color:#ef4444">revert SoulboundToken()</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DEPOIMENTOS ══ -->
+<section class="community" id="community">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <span data-lang="pt" style="display:inline">Comunidade de preservadores</span>
+      <span data-lang="en">Preservers community</span>
+      <span data-lang="es">Comunidad de preservadores</span>
+    </div>
+    <h2 class="section-title">
+      <span data-lang="pt" style="display:block">O que dizem nossos <em>preservadores</em></span>
+      <span data-lang="en">What our <em>preservers</em> say</span>
+      <span data-lang="es">Lo que dicen nuestros <em>preservadores</em></span>
+    </h2>
+
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text"><span data-lang="pt" style="display:inline">"Presenteei minha filha com 5m² no aniversário dela. A reação foi incrível — um presente com propósito real e que dura para sempre."</span><span data-lang="en">"I gifted my daughter 5m² on her birthday. The reaction was incredible — a gift with real purpose that lasts forever."</span><span data-lang="es">"Le regalé a mi hija 5m² en su cumpleaños. La reacción fue increíble — un regalo con propósito real que dura para siempre."</span></p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MC</div>
+          <div>
+            <div class="author-name">Marcos C.</div>
+            <div class="author-location">São Paulo, SP</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text"><span data-lang="pt" style="display:inline">"Como empresa, adquirimos 100m² para nosso relatório ESG. O certificado blockchain é um diferencial incrível de transparência."</span><span data-lang="en">"As a company, we purchased 100m² for our ESG report. The blockchain certificate is an incredible transparency differentiator."</span><span data-lang="es">"Como empresa, adquirimos 100m² para nuestro informe ESG. El certificado blockchain es un diferenciador de transparencia increíble."</span></p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AL</div>
+          <div>
+            <div class="author-name">Ana L.</div>
+            <div class="author-location">Curitiba, PR</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text"><span data-lang="pt" style="display:inline">"Processo simples, pagamento fácil, certificado chegou em minutos. Verifiquei no PolygonScan — está lá, imutável. Incrível."</span><span data-lang="en">"Simple process, easy payment, certificate arrived in minutes. I verified on PolygonScan — it's there, immutable. Amazing."</span><span data-lang="es">"Proceso simple, pago fácil, certificado llegó en minutos. Lo verifiqué en PolygonScan — está ahí, inmutable. Increíble."</span></p>
+        <div class="testimonial-author">
+          <div class="author-avatar">RF</div>
+          <div>
+            <div class="author-name">Ricardo F.</div>
+            <div class="author-location">Florianópolis, SC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PREÇOS ══ -->
+<section class="pricing" id="pricing">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <span data-lang="pt" style="display:inline">Escolha sua área</span>
+      <span data-lang="en">Choose your area</span>
+      <span data-lang="es">Elige tu área</span>
+    </div>
+    <h2 class="section-title">
+      <span data-lang="pt" style="display:block">Preserve seu <em>pedaço</em> de floresta</span>
+      <span data-lang="en">Preserve your <em>piece</em> of forest</span>
+      <span data-lang="es">Preserva tu <em>pedazo</em> de bosque</span>
+    </h2>
+    <p class="section-desc">
+      <span data-lang="pt" style="display:inline">Cada certificado é único, vitalício e registrado na blockchain Polygon.</span>
+      <span data-lang="en">Each certificate is unique, lifetime and recorded on the Polygon blockchain.</span>
+      <span data-lang="es">Cada certificado es único, vitalicio y registrado en la blockchain Polygon.</span>
+    </p>
+
+    <div class="pricing-cards">
+
+      <!-- PRESERVADOR -->
+      <div class="pricing-card">
+        <div class="pricing-name" style="font-size:0.7rem;letter-spacing:0.25em;">
+          <span data-lang="pt" style="display:inline">✦ PRESERVADOR ✦</span>
+          <span data-lang="en">✦ PRESERVER ✦</span>
+          <span data-lang="es">✦ PRESERVADOR ✦</span>
+        </div>
+        <div class="pricing-qty">1 m²</div>
+        <div class="pricing-price">R$ 199</div>
+        <div class="pricing-period">
+          <span data-lang="pt" style="display:inline">pagamento único · preservação vitalícia</span>
+          <span data-lang="en">one-time payment · lifetime preservation</span>
+          <span data-lang="es">pago único · preservación vitalicia</span>
+        </div>
+        <ul class="pricing-features">
+          <li><span data-lang="pt" style="display:inline">1 certificado nominal vitalício</span><span data-lang="en">1 lifetime nominal certificate</span><span data-lang="es">1 certificado nominal vitalicio</span></li>
+          <li><span data-lang="pt" style="display:inline">Token NFT Soulbound — Polygon</span><span data-lang="en">Soulbound NFT token — Polygon</span><span data-lang="es">Token NFT Soulbound — Polygon</span></li>
+          <li><span data-lang="pt" style="display:inline">PDF oficial para download</span><span data-lang="en">Official PDF for download</span><span data-lang="es">PDF oficial para descargar</span></li>
+          <li><span data-lang="pt" style="display:inline">Verificação pública blockchain</span><span data-lang="en">Public blockchain verification</span><span data-lang="es">Verificación pública blockchain</span></li>
+          <li><span data-lang="pt" style="display:inline">Ideal para presente</span><span data-lang="en">Perfect as a gift</span><span data-lang="es">Ideal como regalo</span></li>
+        </ul>
+        <a href="#" class="btn-buy btn-buy-outline">
+          <span data-lang="pt" style="display:inline">Tornar-se Preservador</span>
+          <span data-lang-inline="en">Become a Preserver</span>
+          <span data-lang-inline="es">Convertirse en Preservador</span>
+        </a>
+      </div>
+
+      <!-- GUARDIÃO -->
+      <div class="pricing-card featured">
+        <div class="featured-badge">
+          <span data-lang="pt" style="display:inline">Mais escolhido</span>
+          <span data-lang-inline="en">Most chosen</span>
+          <span data-lang-inline="es">Más elegido</span>
+        </div>
+        <div class="pricing-name" style="font-size:0.7rem;letter-spacing:0.25em;">
+          <span data-lang="pt" style="display:inline">✦ GUARDIÃO ✦</span>
+          <span data-lang="en">✦ GUARDIAN ✦</span>
+          <span data-lang="es">✦ GUARDIÁN ✦</span>
+        </div>
+        <div class="pricing-qty">5 m²</div>
+        <div class="pricing-price">R$ 690</div>
+        <div class="pricing-period">
+          <span data-lang="pt" style="display:inline">pagamento único · R$ 138/m² · 5 certificados</span>
+          <span data-lang="en">one-time payment · R$ 138/m² · 5 certificates</span>
+          <span data-lang="es">pago único · R$ 138/m² · 5 certificados</span>
+        </div>
+        <ul class="pricing-features">
+          <li><span data-lang="pt" style="display:inline">5 certificados — personalize cada nome</span><span data-lang="en">5 certificates — personalize each name</span><span data-lang="es">5 certificados — personaliza cada nombre</span></li>
+          <li><span data-lang="pt" style="display:inline">5 tokens NFT Soulbound</span><span data-lang="en">5 Soulbound NFT tokens</span><span data-lang="es">5 tokens NFT Soulbound</span></li>
+          <li><span data-lang="pt" style="display:inline">Perfeito para presentear família</span><span data-lang="en">Perfect to gift your family</span><span data-lang="es">Perfecto para regalar a la familia</span></li>
+          <li><span data-lang="pt" style="display:inline">PDF e verificação blockchain por cert.</span><span data-lang="en">PDF and blockchain verification each</span><span data-lang="es">PDF y verificación blockchain por cert.</span></li>
+          <li><span data-lang="pt" style="display:inline">Legado ambiental familiar</span><span data-lang="en">Family environmental legacy</span><span data-lang="es">Legado ambiental familiar</span></li>
+        </ul>
+        <a href="#" class="btn-buy">
+          <span data-lang="pt" style="display:inline">Tornar-se Guardião</span>
+          <span data-lang-inline="en">Become a Guardian</span>
+          <span data-lang-inline="es">Convertirse en Guardián</span>
+        </a>
+      </div>
+
+      <!-- PATRONO ESG -->
+      <div class="pricing-card" style="border-color:rgba(212,168,67,0.5);">
+        <div class="pricing-name" style="font-size:0.7rem;letter-spacing:0.25em;">
+          <span data-lang="pt" style="display:inline">✦ PATRONO ✦</span>
+          <span data-lang="en">✦ PATRON ✦</span>
+          <span data-lang="es">✦ PATRONO ✦</span>
+        </div>
+        <div class="pricing-qty" style="font-size:1.1rem;">
+          <span data-lang="pt" style="display:inline">Mínimo 10 m²</span>
+          <span data-lang="en">Minimum 10 m²</span>
+          <span data-lang="es">Mínimo 10 m²</span>
+        </div>
+        <div class="pricing-price">R$ 500<span style="font-size:1rem;font-weight:400">/m²</span></div>
+        <div class="pricing-period">
+          <span data-lang="pt" style="display:inline">a partir de R$ 5.000 · solução ESG corporativa</span>
+          <span data-lang="en">from R$ 5,000 · corporate ESG solution</span>
+          <span data-lang="es">desde R$ 5.000 · solución ESG corporativa</span>
+        </div>
+        <ul class="pricing-features">
+          <li><span data-lang="pt" style="display:inline">Relatório ESG personalizado e auditável</span><span data-lang="en">Custom auditable ESG report</span><span data-lang="es">Informe ESG personalizado y auditable</span></li>
+          <li><span data-lang="pt" style="display:inline">Logo da empresa nos certificados</span><span data-lang="en">Company logo on certificates</span><span data-lang="es">Logo de empresa en certificados</span></li>
+          <li><span data-lang="pt" style="display:inline">Área dedicada com coordenadas GPS</span><span data-lang="en">Dedicated area with GPS coordinates</span><span data-lang="es">Área dedicada con coordenadas GPS</span></li>
+          <li><span data-lang="pt" style="display:inline">Verificação blockchain pública</span><span data-lang="en">Public blockchain verification</span><span data-lang="es">Verificación blockchain pública</span></li>
+          <li><span data-lang="pt" style="display:inline">Atendimento dedicado</span><span data-lang="en">Dedicated support</span><span data-lang="es">Atención dedicada</span></li>
+        </ul>
+        <a href="#contact" class="btn-buy" style="background:var(--gold);color:var(--green-dark);">
+          <span data-lang="pt" style="display:inline">Tornar-se Patrono</span>
+          <span data-lang-inline="en">Become a Patron</span>
+          <span data-lang-inline="es">Convertirse en Patrono</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="faq" id="faq">
+  <div class="section-inner">
+    <div class="section-eyebrow">FAQ</div>
+    <h2 class="section-title">
+      <span data-lang="pt" style="display:block">Perguntas <em>frequentes</em></span>
+      <span data-lang="en">Frequently asked <em>questions</em></span>
+      <span data-lang="es">Preguntas <em>frecuentes</em></span>
+    </h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="pt" style="display:inline">O certificado é um investimento financeiro?</span>
+          <span data-lang="en">Is the certificate a financial investment?</span>
+          <span data-lang="es">¿El certificado es una inversión financiera?</span>
+          <span class="faq-q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="pt" style="display:inline">Não. O certificado Green Diamont é um instrumento de impacto ambiental, não um ativo financeiro. Ele não promete retorno financeiro nem é negociável. Seu valor é ambiental e simbólico.</span>
+          <span data-lang="en">No. The Green Diamont certificate is an environmental impact instrument, not a financial asset. It does not promise financial return and is not tradeable. Its value is environmental and symbolic.</span>
+          <span data-lang="es">No. El certificado Green Diamont es un instrumento de impacto ambiental, no un activo financiero. No promete retorno financiero ni es negociable. Su valor es ambiental y simbólico.</span>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="pt" style="display:inline">Posso dar o certificado como presente?</span>
+          <span data-lang="en">Can I give the certificate as a gift?</span>
+          <span data-lang="es">¿Puedo dar el certificado como regalo?</span>
+          <span class="faq-q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="pt" style="display:inline">Sim! Durante a compra você pode inserir o nome da pessoa presenteada. O certificado será emitido no nome dela e enviado para o e-mail que você informar.</span>
+          <span data-lang="en">Yes! During purchase you can enter the recipient's name. The certificate will be issued in their name and sent to the email you provide.</span>
+          <span data-lang="es">¡Sí! Durante la compra puedes ingresar el nombre del destinatario. El certificado se emitirá a su nombre y se enviará al correo que proporciones.</span>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="pt" style="display:inline">Preciso de carteira cripto para receber o certificado?</span>
+          <span data-lang="en">Do I need a crypto wallet to receive the certificate?</span>
+          <span data-lang="es">¿Necesito una billetera cripto para recibir el certificado?</span>
+          <span class="faq-q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="pt" style="display:inline">Não é obrigatório. Você recebe o PDF por e-mail e pode verificar via link PolygonScan. Para possuir o token na sua carteira, você precisará de um endereço Polygon (ex: MetaMask).</span>
+          <span data-lang="en">Not required. You receive the PDF by email and can verify via PolygonScan link. To hold the token in your wallet, you'll need a Polygon address (e.g. MetaMask).</span>
+          <span data-lang="es">No es obligatorio. Recibes el PDF por email y puedes verificar via enlace PolygonScan. Para tener el token en tu billetera, necesitarás una dirección Polygon (ej: MetaMask).</span>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="pt" style="display:inline">Como é garantida a preservação da floresta?</span>
+          <span data-lang="en">How is forest preservation guaranteed?</span>
+          <span data-lang="es">¿Cómo se garantiza la preservación del bosque?</span>
+          <span class="faq-q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="pt" style="display:inline">As áreas são gerenciadas por parceiros com obrigações contratuais de preservação. Trabalhamos com proprietários rurais sob regime de servidão ambiental e PSA (Pagamento por Serviços Ambientais).</span>
+          <span data-lang="en">Areas are managed by partners with contractual preservation obligations. We work with rural landowners under environmental easement and PSA (Payment for Environmental Services) arrangements.</span>
+          <span data-lang="es">Las áreas son gestionadas por socios con obligaciones contractuales de preservación. Trabajamos con propietarios rurales bajo régimen de servidumbre ambiental y PSA (Pago por Servicios Ambientales).</span>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="pt" style="display:inline">Quais formas de pagamento são aceitas?</span>
+          <span data-lang="en">What payment methods are accepted?</span>
+          <span data-lang="es">¿Qué métodos de pago se aceptan?</span>
+          <span class="faq-q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="pt" style="display:inline">Aceitamos cartão de crédito (Visa, Mastercard, Amex), Pix e boleto bancário. O certificado é emitido automaticamente após a confirmação do pagamento.</span>
+          <span data-lang="en">We accept credit cards (Visa, Mastercard, Amex), Pix and bank slip. The certificate is issued automatically after payment confirmation.</span>
+          <span data-lang="es">Aceptamos tarjetas de crédito (Visa, Mastercard, Amex), Pix y boleto bancario. El certificado se emite automáticamente tras la confirmación del pago.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTATO ══ -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <div class="section-eyebrow">
+          <span data-lang="pt" style="display:inline">Fale conosco</span>
+          <span data-lang="en">Get in touch</span>
+          <span data-lang="es">Contáctanos</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang="pt" style="display:block">Dúvidas? Parceria? <em>Estamos aqui.</em></span>
+          <span data-lang="en">Questions? Partnership? <em>We're here.</em></span>
+          <span data-lang="es">¿Dudas? ¿Alianza? <em>Estamos aquí.</em></span>
+        </h2>
+        <p class="section-desc" style="margin-bottom: 0">
+          <span data-lang="pt" style="display:inline">Entre em contato para parcerias empresariais, dúvidas técnicas, ou para saber mais sobre o projeto.</span>
+          <span data-lang="en">Contact us for corporate partnerships, technical questions, or to learn more about the project.</span>
+          <span data-lang="es">Contáctanos para alianzas corporativas, dudas técnicas o para saber más sobre el proyecto.</span>
+        </p>
+
+        <div class="contact-info-items">
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">contato@greendiamont.com</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label"><span data-lang="pt" style="display:inline">Localização</span><span data-lang="en">Location</span><span data-lang="es">Ubicación</span></div>
+              <div class="contact-value">Blumenau, Santa Catarina — Brasil</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-form">
+          <div class="form-group">
+            <label class="form-label">
+              <span data-lang="pt" style="display:inline">Nome</span>
+              <span data-lang="en">Name</span>
+              <span data-lang="es">Nombre</span>
+            </label>
+            <input type="text" class="form-input" placeholder="Seu nome completo">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" placeholder="seu@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <span data-lang="pt" style="display:inline">Assunto</span>
+              <span data-lang="en">Subject</span>
+              <span data-lang="es">Asunto</span>
+            </label>
+            <select class="form-select form-input">
+              <option value="">
+                <span data-lang="pt">Selecione...</span>
+              </option>
+              <option value="individual">
+                <span data-lang="pt">Certificado Individual</span>
+              </option>
+              <option value="empresa">
+                <span data-lang="pt">Pacote Empresarial / ESG</span>
+              </option>
+              <option value="parceria">
+                <span data-lang="pt">Parceria / Revenda</span>
+              </option>
+              <option value="outro">
+                <span data-lang="pt">Outro</span>
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <span data-lang="pt" style="display:inline">Mensagem</span>
+              <span data-lang="en">Message</span>
+              <span data-lang="es">Mensaje</span>
+            </label>
+            <textarea class="form-textarea" placeholder="Como podemos ajudar?"></textarea>
+          </div>
+          <button class="btn-primary" style="width:100%; text-align:center;">
+            <span data-lang="pt" style="display:inline">Enviar mensagem</span>
+            <span data-lang-inline="en">Send message</span>
+            <span data-lang-inline="es">Enviar mensaje</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo">Green Diamont</span>
+        <p>
+          <span data-lang="pt" style="display:inline">Preservando a Mata Atlântica, metro a metro, para sempre. Certificados de impacto ambiental registrados em blockchain.</span>
+          <span data-lang="en">Preserving the Atlantic Forest, meter by meter, forever. Environmental impact certificates recorded on blockchain.</span>
+          <span data-lang="es">Preservando la Mata Atlántica, metro a metro, para siempre. Certificados de impacto ambiental registrados en blockchain.</span>
+        </p>
+        <div class="polygon-badge" style="margin-top: 16px; display:inline-flex">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#a78bfa"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Polygon Mainnet
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>
+          <span data-lang="pt" style="display:inline">Produto</span>
+          <span data-lang="en">Product</span>
+          <span data-lang="es">Producto</span>
+        </h5>
+        <ul>
+          <li><a href="#about">
+            <span data-lang="pt" style="display:inline">O projeto</span>
+            <span data-lang="en">The project</span>
+            <span data-lang="es">El proyecto</span>
+          </a></li>
+          <li><a href="#how">
+            <span data-lang="pt" style="display:inline">Como funciona</span>
+            <span data-lang="en">How it works</span>
+            <span data-lang="es">Cómo funciona</span>
+          </a></li>
+          <li><a href="#certificate">Certificado</a></li>
+          <li><a href="#pricing">
+            <span data-lang="pt" style="display:inline">Preços</span>
+            <span data-lang="en">Pricing</span>
+            <span data-lang="es">Precios</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>
+          <span data-lang="pt" style="display:inline">Legal</span>
+          <span data-lang="en">Legal</span>
+          <span data-lang="es">Legal</span>
+        </h5>
+        <ul>
+          <li><a href="#">
+            <span data-lang="pt" style="display:inline">Política de Privacidade</span>
+            <span data-lang="en">Privacy Policy</span>
+            <span data-lang="es">Política de Privacidad</span>
+          </a></li>
+          <li><a href="#">
+            <span data-lang="pt" style="display:inline">Termos de Uso</span>
+            <span data-lang="en">Terms of Use</span>
+            <span data-lang="es">Términos de Uso</span>
+          </a></li>
+          <li><a href="#legal">
+            <span data-lang="pt" style="display:inline">Base Legal</span>
+            <span data-lang="en">Legal Basis</span>
+            <span data-lang="es">Base Legal</span>
+          </a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>
+          <span data-lang="pt" style="display:inline">Contato</span>
+          <span data-lang="en">Contact</span>
+          <span data-lang="es">Contacto</span>
+        </h5>
+        <ul>
+          <li><a href="mailto:contato@greendiamont.com">contato@greendiamont.com</a></li>
+          <li><a href="https://polygonscan.com/address/0x799Fb383692fc580D32ae77CA00DC72A763161eF" target="_blank">PolygonScan</a></li>
+          <li><a href="#contact">
+            <span data-lang="pt" style="display:inline">Parcerias</span>
+            <span data-lang="en">Partnerships</span>
+            <span data-lang="es">Alianzas</span>
+          </a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2024 Green Diamont. <span data-lang="pt" style="display:inline">Todos os direitos reservados.</span><span data-lang="en">All rights reserved.</span><span data-lang="es">Todos los derechos reservados.</span></span>
+      <div class="footer-legal">
+        <a href="#">
+          <span data-lang="pt" style="display:inline">Privacidade</span>
+          <span data-lang="en">Privacy</span>
+          <span data-lang="es">Privacidad</span>
+        </a>
+        <a href="#">
+          <span data-lang="pt" style="display:inline">Termos</span>
+          <span data-lang="en">Terms</span>
+          <span data-lang="es">Términos</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+let currentLang = 'pt';
+
+function setLang(lang) {
+  currentLang = lang;
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+  });
+
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-lang') === lang);
+    if (el.getAttribute('data-lang') === lang) {
+      el.style.display = el.tagName === 'SPAN' ? 'inline' : 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+
+  document.querySelectorAll('[data-lang-inline]').forEach(el => {
+    if (el.getAttribute('data-lang-inline') === lang) {
+      el.style.display = 'inline';
+      el.classList.add('active');
+    } else {
+      el.style.display = 'none';
+      el.classList.remove('active');
+    }
+  });
+
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+}
+
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const icon = btn.querySelector('.faq-q-icon');
+  const isOpen = answer.classList.contains('open');
+
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-q-icon').forEach(i => i.textContent = '+');
+
+  if (!isOpen) {
+    answer.classList.add('open');
+    icon.textContent = '−';
+  }
+}
+
+setLang('pt');
+</script>
+</body>
+</html>
