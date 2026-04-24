@@ -1207,6 +1207,64 @@
   [data-lang].active { display: block; }
   [data-lang-inline] { display: none; }
   [data-lang-inline].active { display: inline; }
+
+  /* ── FAUNA ── */
+  .fauna {
+    background: var(--green-dark);
+    padding: 90px 40px;
+  }
+  .fauna .section-eyebrow { color: var(--gold-light); }
+  .fauna .section-title { color: var(--white); }
+  .fauna .section-title em { color: var(--green-light); }
+  .fauna .section-desc { color: rgba(255,255,255,0.65); }
+
+  .fauna-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .fauna-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: pointer;
+  }
+
+  .fauna-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .fauna-card:hover img { transform: scale(1.06); }
+
+  .fauna-card-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(10,30,18,0.85));
+    padding: 40px 16px 16px;
+  }
+
+  .fauna-card-name {
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .fauna-card-status {
+    color: var(--gold-light);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 900px) {
+    .fauna-grid { grid-template-columns: 1fr 1fr; }
+  }
+
 </style>
 </head>
 <body>
@@ -1226,8 +1284,7 @@
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <div class="hero-img-wrap">
-    <!-- TROQUE a imagem abaixo: coloque mata-atlantica.jpg na mesma pasta -->
-    <img src="images/hero-forest.jpg" alt="Mata Atlântica" onerror="this.style.display='none'">
+    <img src="images/hero-forest.jpg" alt="Vale dos Ventos — Mata Atlântica">
   </div>
 
   <div class="hero-content">
@@ -1349,16 +1406,8 @@
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-img">
-        <!-- TROQUE pela imagem da mata: images/mata-atlantica.jpg -->
-        <img src="images/mata-atlantica.jpg" alt="Mata Atlântica" onerror="this.style.display='none'">
-        <div class="about-img-placeholder">
-          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M32 8 C20 8 12 20 12 30 C12 44 24 52 32 56 C40 52 52 44 52 30 C52 20 44 8 32 8Z"/>
-            <path d="M32 20 L32 44 M20 32 L44 32"/>
-          </svg>
-          <span>Adicione sua imagem da Mata Atlântica<br><small>images/mata-atlantica.jpg</small></span>
-        </div>
-        <div class="about-img-label">Mata Atlântica — Sul do Brasil</div>
+        <img src="images/mata-atlantica.jpg" alt="Vale dos Ventos — Mata Atlântica Sul do Brasil">
+        <div class="about-img-label">Vale dos Ventos — Santa Catarina, Brasil</div>
       </div>
 
       <div class="about-text">
@@ -1677,6 +1726,75 @@
           <div>
             <div class="author-name">Ricardo F.</div>
             <div class="author-location">Florianópolis, SC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FAUNA ══ -->
+<section class="fauna" id="fauna">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <span data-lang="pt" style="display:inline">Fauna preservada</span>
+      <span data-lang="en">Preserved wildlife</span>
+      <span data-lang="es">Fauna preservada</span>
+    </div>
+    <h2 class="section-title">
+      <span data-lang="pt" style="display:block">A vida que você <em>protege</em></span>
+      <span data-lang="en">The life you <em>protect</em></span>
+      <span data-lang="es">La vida que <em>proteges</em></span>
+    </h2>
+    <p class="section-desc">
+      <span data-lang="pt" style="display:inline">A Mata Atlântica abriga mais de 2.000 espécies de vertebrados — muitas delas ameaçadas de extinção. Cada m² preservado é um lar protegido.</span>
+      <span data-lang="en">The Atlantic Forest is home to over 2,000 vertebrate species — many of them threatened with extinction. Each preserved m² is a protected home.</span>
+      <span data-lang="es">La Mata Atlántica alberga más de 2.000 especies de vertebrados — muchas amenazadas de extinción. Cada m² preservado es un hogar protegido.</span>
+    </p>
+
+    <div class="fauna-grid">
+      <div class="fauna-card">
+        <img src="images/fauna-puma.jpg" alt="Puma — Mata Atlântica">
+        <div class="fauna-card-overlay">
+          <div class="fauna-card-name">Puma</div>
+          <div class="fauna-card-status">
+            <span data-lang="pt" style="display:inline">⚠️ Vulnerável</span>
+            <span data-lang="en">⚠️ Vulnerable</span>
+            <span data-lang="es">⚠️ Vulnerable</span>
+          </div>
+        </div>
+      </div>
+      <div class="fauna-card">
+        <img src="images/fauna-oncinha.jpg" alt="Jaguatirica — Mata Atlântica">
+        <div class="fauna-card-overlay">
+          <div class="fauna-card-name">Jaguatirica</div>
+          <div class="fauna-card-status">
+            <span data-lang="pt" style="display:inline">🔴 Ameaçada</span>
+            <span data-lang="en">🔴 Threatened</span>
+            <span data-lang="es">🔴 Amenazada</span>
+          </div>
+        </div>
+      </div>
+      <div class="fauna-card">
+        <img src="images/fauna-quati.jpg" alt="Quati — Mata Atlântica">
+        <div class="fauna-card-overlay">
+          <div class="fauna-card-name">Quati</div>
+          <div class="fauna-card-status">
+            <span data-lang="pt" style="display:inline">🟡 Endêmico</span>
+            <span data-lang="en">🟡 Endemic</span>
+            <span data-lang="es">🟡 Endémico</span>
+          </div>
+        </div>
+      </div>
+      <div class="fauna-card">
+        <img src="images/fauna-capivara.jpg" alt="Capivara — Mata Atlântica">
+        <div class="fauna-card-overlay">
+          <div class="fauna-card-name">Capivara</div>
+          <div class="fauna-card-status">
+            <span data-lang="pt" style="display:inline">🟢 Nativa</span>
+            <span data-lang="en">🟢 Native</span>
+            <span data-lang="es">🟢 Nativa</span>
           </div>
         </div>
       </div>
