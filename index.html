@@ -1967,6 +1967,229 @@
     border-color: var(--gold);
   }
 
+
+  /* ══ MODAL FORMULÁRIO ══ */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5,18,10,0.85);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open {
+    display: flex;
+  }
+
+  .modal-box {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 540px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 1;
+    padding: 4px 8px;
+  }
+
+  .modal-close:hover { color: var(--green-dark); }
+
+  .modal-logo {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .modal-logo img {
+    height: 48px;
+    width: auto;
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--green-dark);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .modal-subtitle {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .modal-plan-badge {
+    display: inline-block;
+    background: var(--green-dark);
+    color: var(--gold);
+    font-size: 0.72rem;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 16px;
+  }
+
+  .modal-field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--green-dark);
+    letter-spacing: 0.03em;
+  }
+
+  .modal-field label span {
+    color: #c0392b;
+    margin-left: 2px;
+  }
+
+  .modal-field input,
+  .modal-field select {
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    background: var(--cream);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .modal-field input:focus,
+  .modal-field select:focus {
+    border-color: var(--green-mid);
+    background: var(--white);
+  }
+
+  .modal-field-file {
+    padding: 11px 14px;
+    border: 1.5px dashed var(--border);
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    background: var(--cream);
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .modal-field-file:hover {
+    border-color: var(--green-mid);
+    color: var(--green-mid);
+  }
+
+  .modal-field input[type="file"] {
+    padding: 8px;
+    border: 1.5px dashed var(--border);
+    background: var(--cream);
+    cursor: pointer;
+  }
+
+  .modal-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  .modal-terms {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .modal-terms input[type="checkbox"] {
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .modal-terms label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .modal-terms label a {
+    color: var(--green-mid);
+    text-decoration: underline;
+  }
+
+  .modal-submit {
+    width: 100%;
+    background: var(--gold);
+    color: var(--green-dark);
+    padding: 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .modal-submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .modal-submit:disabled {
+    background: var(--border);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .modal-secure {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+  }
+
+  .modal-error {
+    background: #fde8e8;
+    color: #c0392b;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    margin-bottom: 14px;
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .modal-box { padding: 28px 20px; }
+  }
+
 </style>
 </head>
 <body>
@@ -2626,7 +2849,7 @@
           <li><span data-lang="pt" style="display:inline">Verificação pública blockchain</span><span data-lang="en">Public blockchain verification</span><span data-lang="es">Verificación pública blockchain</span></li>
           <li><span data-lang="pt" style="display:inline">Ideal para presente</span><span data-lang="en">Perfect as a gift</span><span data-lang="es">Ideal como regalo</span></li>
         </ul>
-        <a href="https://buy.stripe.com/test_5kQ00c4Ehd7ObJN29f6J201" target="_blank" class="btn-buy btn-buy-outline">
+        <a href="#" onclick="openModal('preservador','https://buy.stripe.com/test_5kQ00c4Ehd7ObJN29f6J201');return false;" class="btn-buy btn-buy-outline">
           <span data-lang="pt" style="display:inline">Tornar-se Preservador</span>
           <span data-lang-inline="en">Become a Preserver</span>
           <span data-lang-inline="es">Convertirse en Preservador</span>
@@ -2663,7 +2886,7 @@
           <li><span data-lang="pt" style="display:inline">PDF e verificação blockchain por cert.</span><span data-lang="en">PDF and blockchain verification each</span><span data-lang="es">PDF y verificación blockchain por cert.</span></li>
           <li><span data-lang="pt" style="display:inline">Legado ambiental familiar</span><span data-lang="en">Family environmental legacy</span><span data-lang="es">Legado ambiental familiar</span></li>
         </ul>
-        <a href="https://buy.stripe.com/test_8x25kw3AdebS8xBg056J202" target="_blank" class="btn-buy">
+        <a href="#" onclick="openModal('guardiao','https://buy.stripe.com/test_8x25kw3AdebS8xBg056J202');return false;" class="btn-buy">
           <span data-lang="pt" style="display:inline">Tornar-se Guardião</span>
           <span data-lang-inline="en">Become a Guardian</span>
           <span data-lang-inline="es">Convertirse en Guardián</span>
@@ -2699,7 +2922,7 @@
           <li><span data-lang="pt" style="display:inline">Verificação blockchain pública</span><span data-lang="en">Public blockchain verification</span><span data-lang="es">Verificación blockchain pública</span></li>
           <li><span data-lang="pt" style="display:inline">Atendimento dedicado</span><span data-lang="en">Dedicated support</span><span data-lang="es">Atención dedicada</span></li>
         </ul>
-        <a href="https://buy.stripe.com/test_9B68wIdaN7Nu3dh7tz6J203" target="_blank" class="btn-buy" style="background:var(--gold);color:var(--green-dark);">
+        <a href="#" onclick="openModal('patrono','https://buy.stripe.com/test_9B68wIdaN7Nu3dh7tz6J203');return false;" class="btn-buy" style="background:var(--gold);color:var(--green-dark);">
           <span data-lang="pt" style="display:inline">Tornar-se Patrono</span>
           <span data-lang-inline="en">Become a Patron</span>
           <span data-lang-inline="es">Convertirse en Patrono</span>
@@ -2877,7 +3100,7 @@
         <span data-lang="en">Make your company a Patron — R$ 500/m² · minimum 10m² · ESG report included</span>
         <span data-lang="es">Haz de tu empresa un Patrono — R$ 500/m² · mínimo 10m² · informe ESG incluido</span>
       </p>
-      <a href="#contact" class="btn-primary">
+      <a href="#" onclick="openModal('patrono','https://buy.stripe.com/test_9B68wIdaN7Nu3dh7tz6J203');return false;" class="btn-primary">
         <span data-lang="pt" style="display:inline">Quero ser Patrono</span>
         <span data-lang-inline="en">I want to be a Patron</span>
         <span data-lang-inline="es">Quiero ser Patrono</span>
@@ -3306,5 +3529,105 @@ setLang('pt');
 })();
 
 </script>
+
+<!-- ══ MODAL FORMULÁRIO PRÉ-PAGAMENTO ══ -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <!-- Logo -->
+    <div class="modal-logo">
+      <img src="images/logo-green-diamont.png" alt="Green Diamont">
+    </div>
+
+    <!-- Badge do plano -->
+    <div style="text-align:center">
+      <span class="modal-plan-badge" id="modalPlanBadge">✦ PRESERVADOR ✦</span>
+    </div>
+
+    <h2 class="modal-title" id="modalTitle">Seus dados para o certificado</h2>
+    <p class="modal-subtitle" id="modalSubtitle">Preencha abaixo — seu certificado será emitido com estas informações.</p>
+
+    <div class="modal-error" id="modalError"></div>
+
+    <!-- FORMULÁRIO PESSOA FÍSICA (Preservador / Guardião) -->
+    <div id="formPF">
+      <div class="modal-field">
+        <label>Nome completo <span>*</span></label>
+        <input type="text" id="pf_nome" placeholder="Como deve aparecer no certificado" autocomplete="name">
+      </div>
+      <div class="modal-field">
+        <label>Email <span>*</span></label>
+        <input type="email" id="pf_email" placeholder="seu@email.com" autocomplete="email">
+      </div>
+      <div class="modal-field">
+        <label>CPF / Passaporte <span>*</span></label>
+        <input type="text" id="pf_cpf" placeholder="000.000.000-00 ou nº do passaporte">
+      </div>
+      <div class="modal-field">
+        <label>Endereço completo <span>*</span></label>
+        <input type="text" id="pf_endereco" placeholder="Rua, número, complemento">
+      </div>
+      <div class="modal-field">
+        <label>Cidade / Estado / País <span>*</span></label>
+        <input type="text" id="pf_cidade" placeholder="Ex: Blumenau / SC / Brasil">
+      </div>
+    </div>
+
+    <!-- FORMULÁRIO PESSOA JURÍDICA (Patrono) -->
+    <div id="formPJ" style="display:none">
+      <div class="modal-field">
+        <label>Nome da Empresa <span>*</span></label>
+        <input type="text" id="pj_empresa" placeholder="Razão social ou nome fantasia">
+      </div>
+      <div class="modal-field">
+        <label>Email corporativo <span>*</span></label>
+        <input type="email" id="pj_email" placeholder="contato@empresa.com.br">
+      </div>
+      <div class="modal-field">
+        <label>CNPJ <span>*</span></label>
+        <input type="text" id="pj_cnpj" placeholder="00.000.000/0001-00">
+      </div>
+      <div class="modal-field">
+        <label>Endereço da empresa <span>*</span></label>
+        <input type="text" id="pj_endereco" placeholder="Rua, número, complemento">
+      </div>
+      <div class="modal-field">
+        <label>Cidade / Estado / País <span>*</span></label>
+        <input type="text" id="pj_cidade" placeholder="Ex: São Paulo / SP / Brasil">
+      </div>
+      <div class="modal-field">
+        <label>Logo da empresa <span>*</span></label>
+        <input type="file" id="pj_logo" accept=".jpg,.jpeg,.png,.svg,.webp">
+        <small style="color:var(--text-muted);font-size:0.75rem;">JPG, PNG ou SVG · máx. 5MB · será exibida no certificado ESG</small>
+      </div>
+      <div class="modal-field">
+        <label>Responsável ESG / Contato</label>
+        <input type="text" id="pj_responsavel" placeholder="Nome do responsável pela área ESG">
+      </div>
+    </div>
+
+    <div class="modal-divider"></div>
+
+    <!-- Termos -->
+    <div class="modal-terms">
+      <input type="checkbox" id="modalTerms">
+      <label for="modalTerms">
+        Li e concordo com os <a href="#" target="_blank">Termos de Uso</a> e a
+        <a href="#" target="_blank">Política de Privacidade</a> do Green Diamont.
+        Entendo que este certificado é um instrumento de impacto ambiental, não um investimento financeiro.
+      </label>
+    </div>
+
+    <button class="modal-submit" id="modalSubmit" onclick="submitForm()">
+      Continuar para pagamento →
+    </button>
+
+    <p class="modal-secure">
+      🔒 Seus dados são protegidos por SSL · Pagamento processado pelo Stripe
+    </p>
+  </div>
+</div>
+
 </body>
 </html>
