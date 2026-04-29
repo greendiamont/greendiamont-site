@@ -351,10 +351,12 @@
   /* Vídeo (slide especial) */
   #heroVid {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    inset: -5%;
+    width: 110%;
+    height: 110%;
     object-fit: cover;
+    transform: scale(0.90);
+    transform-origin: center center;
     opacity: 0;
     transition: opacity 1.2s ease-in-out;
     z-index: 0;
@@ -3107,10 +3109,10 @@ setLang('pt');
   if(dots[0]) dots[0].classList.add('active');
 
   // Auto-advance
-  var t = setInterval(function(){ show(cur+1); }, 7000);
+  var t = setInterval(function(){ show(cur+1); }, 9000);
 
   // Expose for dot clicks
-  window.goSlide = function(n){ show(n); clearInterval(t); t = setInterval(function(){ show(cur+1); }, 7000); };
+  window.goSlide = function(n){ show(n); clearInterval(t); t = setInterval(function(){ show(cur+1); }, 9000); };
 })();
 
 </script>
