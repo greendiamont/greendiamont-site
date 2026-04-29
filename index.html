@@ -2190,6 +2190,16 @@
     .modal-box { padding: 28px 20px; }
   }
 
+
+  /* Botões de compra como button */
+  button.btn-buy {
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+  }
+
 </style>
 </head>
 <body>
@@ -2849,11 +2859,11 @@
           <li><span data-lang="pt" style="display:inline">Verificação pública blockchain</span><span data-lang="en">Public blockchain verification</span><span data-lang="es">Verificación pública blockchain</span></li>
           <li><span data-lang="pt" style="display:inline">Ideal para presente</span><span data-lang="en">Perfect as a gift</span><span data-lang="es">Ideal como regalo</span></li>
         </ul>
-        <a href="#" onclick="openModal('preservador','https://buy.stripe.com/test_5kQ00c4Ehd7ObJN29f6J201');return false;" class="btn-buy btn-buy-outline">
+        <button class="btn-buy btn-buy-outline" onclick="openModal('preservador','https://buy.stripe.com/test_5kQ00c4Ehd7ObJN29f6J201')">
           <span data-lang="pt" style="display:inline">Tornar-se Preservador</span>
           <span data-lang-inline="en">Become a Preserver</span>
           <span data-lang-inline="es">Convertirse en Preservador</span>
-        </a>
+        </button>
       </div>
 
       <!-- GUARDIÃO -->
@@ -2886,11 +2896,11 @@
           <li><span data-lang="pt" style="display:inline">PDF e verificação blockchain por cert.</span><span data-lang="en">PDF and blockchain verification each</span><span data-lang="es">PDF y verificación blockchain por cert.</span></li>
           <li><span data-lang="pt" style="display:inline">Legado ambiental familiar</span><span data-lang="en">Family environmental legacy</span><span data-lang="es">Legado ambiental familiar</span></li>
         </ul>
-        <a href="#" onclick="openModal('guardiao','https://buy.stripe.com/test_8x25kw3AdebS8xBg056J202');return false;" class="btn-buy">
+        <button class="btn-buy" onclick="openModal('guardiao','https://buy.stripe.com/test_8x25kw3AdebS8xBg056J202')">
           <span data-lang="pt" style="display:inline">Tornar-se Guardião</span>
           <span data-lang-inline="en">Become a Guardian</span>
           <span data-lang-inline="es">Convertirse en Guardián</span>
-        </a>
+        </button>
       </div>
 
       <!-- PATRONO ESG -->
@@ -2922,11 +2932,11 @@
           <li><span data-lang="pt" style="display:inline">Verificação blockchain pública</span><span data-lang="en">Public blockchain verification</span><span data-lang="es">Verificación blockchain pública</span></li>
           <li><span data-lang="pt" style="display:inline">Atendimento dedicado</span><span data-lang="en">Dedicated support</span><span data-lang="es">Atención dedicada</span></li>
         </ul>
-        <a href="#" onclick="openModal('patrono','https://buy.stripe.com/test_9B68wIdaN7Nu3dh7tz6J203');return false;" class="btn-buy" style="background:var(--gold);color:var(--green-dark);">
+        <button class="btn-buy" style="background:var(--gold);color:var(--green-dark);" onclick="openModal('patrono','https://buy.stripe.com/test_9B68wIdaN7Nu3dh7tz6J203')">
           <span data-lang="pt" style="display:inline">Tornar-se Patrono</span>
           <span data-lang-inline="en">Become a Patron</span>
           <span data-lang-inline="es">Convertirse en Patrono</span>
-        </a>
+        </button>
       </div>
     </div>
   </div>
