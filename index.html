@@ -39,19 +39,16 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
-    background: var(--green-dark);
+    background: rgba(10,30,18,0.92);
+    backdrop-filter: blur(8px);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 40px;
+    padding: 8px 32px;
+    height: 54px;
   }
 
-  .lang-bar .logo-small {
-    font-family: 'Playfair Display', serif;
-    color: var(--gold);
-    font-size: 1rem;
-    letter-spacing: 0.05em;
-  }
+/* logo-small replaced by img */
 
   .lang-switcher {
     display: flex;
@@ -330,19 +327,22 @@
     overflow: hidden;
     display: flex;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 54px;
   }
 
   /* Slides background-image — método mais simples e confiável */
   .hs {
     position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center;
+    background-size: 110% auto;
+    background-position: center center;
     background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 1.2s ease-in-out;
     z-index: 0;
+  }
+  @media (max-width: 768px) {
+    .hs { background-size: cover; }
   }
   .hs.active { opacity: 1; z-index: 1; }
 
@@ -373,18 +373,7 @@
     pointer-events: none;
   }
 
-  /* Logo canto superior esquerdo */
-  .hero-logo-corner {
-    position: absolute;
-    top: 62px;
-    left: 28px;
-    z-index: 10;
-  }
-  .hero-logo-corner img {
-    width: 100px;
-    height: auto;
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
-  }
+/* hero-logo-corner removido */
 
   /* Dots */
   .hero-dots {
@@ -1625,7 +1614,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 50px;
+    padding-top: 54px;
   }
 
   /* Slides container */
@@ -1894,7 +1883,10 @@
 
 <!-- NAVBAR / LANG BAR -->
 <nav class="lang-bar">
-  <span class="logo-small">Green Diamont</span>
+  <a href="#home" style="display:flex;align-items:center;text-decoration:none;">
+    <img src="images/logo-green-diamont.png" alt="Green Diamont"
+         style="height:38px;width:auto;filter:drop-shadow(0 1px 4px rgba(0,0,0,0.5));">
+  </a>
   <div class="lang-switcher">
     <button class="lang-btn active" onclick="setLang('pt')">PT</button>
     <button class="lang-btn" onclick="setLang('en')">EN</button>
@@ -1919,11 +1911,6 @@
 
   <!-- Gradiente lateral para texto -->
   <div class="hero-grad"></div>
-
-  <!-- Logo canto superior esquerdo -->
-  <div class="hero-logo-corner">
-    <img src="images/logo-green-diamont.png" alt="Green Diamont">
-  </div>
 
   <!-- Dots -->
   <div class="hero-dots" id="heroDots">
