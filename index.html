@@ -78,32 +78,7 @@
     font-weight: 500;
   }
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    background: var(--green-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    padding-top: 50px;
-  }
 
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(82,183,136,0.15) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(212,168,67,0.08) 0%, transparent 60%);
-  }
-
-  .hero-pattern {
-    position: absolute;
-    inset: 0;
-    opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
 
   /* IMAGEM DA FLORESTA — troque o src abaixo */
   .hero-img-wrap {
@@ -135,9 +110,8 @@
     margin: 0 auto;
     padding: 60px 40px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .hero-text {}
@@ -346,6 +320,149 @@
     word-break: break-all;
     margin-top: 2px;
   }
+
+
+  /* ══ HERO CARROSSEL ══ */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px;
+  }
+
+  .hero-slides {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+
+  .hero-slide.active { opacity: 1; }
+
+  /* Foto com Ken Burns */
+  .hero-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-slide.active .hero-photo {
+    animation: kenburns 9s ease-out forwards;
+  }
+
+  @keyframes kenburns {
+    0%   { transform: scale(1.0) translate(0, 0); }
+    100% { transform: scale(1.08) translate(-1%, -0.5%); }
+  }
+
+  /* Vídeo */
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Overlay escurecedor */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      135deg,
+      rgba(10,30,18,0.78) 0%,
+      rgba(10,30,18,0.48) 55%,
+      rgba(10,30,18,0.28) 100%
+    );
+  }
+
+  /* ── LOGO CANTO SUPERIOR ESQUERDO ── */
+  .hero-logo-corner {
+    position: absolute;
+    top: 62px;
+    left: 28px;
+    z-index: 10;
+  }
+
+  .hero-logo-corner img {
+    width: 110px;
+    height: auto;
+    filter: drop-shadow(0 2px 12px rgba(0,0,0,0.7));
+    transition: transform 0.3s ease;
+  }
+
+  .hero-logo-corner img:hover { transform: scale(1.05); }
+
+  /* Dots */
+  .hero-dots {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+
+  .hero-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    border: 1px solid rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .hero-dot.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.3);
+  }
+
+  /* Caption */
+  .hero-caption {
+    position: absolute;
+    bottom: 50px;
+    right: 32px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.68rem;
+    font-style: italic;
+    z-index: 10;
+    letter-spacing: 0.05em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  }
+
+  /* Hero content */
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  .hero-text { max-width: 640px; }
+
+  @media (max-width: 900px) {
+    .hero-logo-corner { top: 58px; left: 16px; }
+    .hero-logo-corner img { width: 80px; }
+    .hero-caption { display: none; }
+    .hero-dots { bottom: 16px; }
+    .hero-content { padding: 40px 20px; }
+  }
+
 
   /* ── STATS BAR ── */
   .stats-bar {
@@ -643,9 +760,8 @@
 
   .legal-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .law-cards {
@@ -759,9 +875,8 @@
 
   .blockchain-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .blockchain-visual {
@@ -1220,7 +1335,7 @@
 
   .fauna-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
 
@@ -1265,6 +1380,534 @@
     .fauna-grid { grid-template-columns: 1fr 1fr; }
   }
 
+
+  /* ── CERTIFICADO REDESENHADO ── */
+  .cert-preview {
+    background: linear-gradient(160deg, #0d2a1a 0%, #071510 100%);
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    padding: 24px 22px 18px;
+    width: 320px;
+    position: relative;
+    box-shadow: 0 0 40px rgba(212,168,67,0.25), 0 0 80px rgba(82,183,136,0.1);
+  }
+  .cert-border-outer {
+    position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid rgba(212,168,67,0.3); border-radius: 2px; pointer-events: none;
+  }
+  .cert-border-inner {
+    position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
+    border: 1px solid rgba(212,168,67,0.12); border-radius: 1px; pointer-events: none;
+  }
+  .cert-corner {
+    position: absolute; color: var(--gold); font-size: 0.7rem; line-height: 1;
+  }
+  .cert-corner-tl { top: 14px; left: 14px; }
+  .cert-corner-tr { top: 14px; right: 14px; }
+  .cert-corner-bl { bottom: 14px; left: 14px; }
+  .cert-corner-br { bottom: 14px; right: 14px; }
+  .cert-logo {
+    font-family: "Playfair Display", serif;
+    color: var(--gold); font-size: 1rem;
+    letter-spacing: 0.2em; text-align: center;
+    margin-bottom: 2px; font-weight: 700;
+  }
+  .cert-logo-sub {
+    color: rgba(255,255,255,0.4); font-size: 0.6rem;
+    text-align: center; letter-spacing: 0.08em; margin-bottom: 10px;
+  }
+  .cert-divider-gold {
+    width: 60%; height: 1px; margin: 0 auto 10px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cert-hereby {
+    color: rgba(255,255,255,0.5); font-size: 0.65rem;
+    text-align: center; letter-spacing: 0.05em; margin-bottom: 2px;
+  }
+  .cert-name {
+    font-family: "Playfair Display", serif;
+    color: var(--gold-light); font-size: 1.15rem;
+    text-align: center; font-style: italic; margin-bottom: 2px;
+  }
+  .cert-area-badge {
+    background: rgba(212,168,67,0.12);
+    border: 1px solid rgba(212,168,67,0.3);
+    color: var(--gold-light); font-size: 0.75rem;
+    text-align: center; padding: 3px 16px;
+    border-radius: 20px; margin: 6px auto 0; display: inline-block;
+    font-weight: 600; letter-spacing: 0.05em;
+    display: flex; justify-content: center;
+  }
+  .cert-bottom-row {
+    display: flex; gap: 10px; align-items: flex-start; margin-top: 10px;
+  }
+  .cert-hash { flex: 1; }
+  .cert-hash-label {
+    color: rgba(255,255,255,0.3); font-size: 0.58rem;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;
+  }
+  .cert-hash-val {
+    color: var(--green-light); font-size: 0.62rem;
+    font-family: monospace; word-break: break-all;
+  }
+  .cert-qr { width: 62px; flex-shrink: 0; }
+  .cert-qr svg { width: 62px; height: 62px; border-radius: 3px; }
+  .cert-seal {
+    text-align: center; color: rgba(212,168,67,0.5);
+    font-size: 0.55rem; letter-spacing: 0.15em;
+    margin-top: 12px; text-transform: uppercase;
+  }
+
+  /* ── PARCEIROS ── */
+  .partners { background: var(--white); }
+  .partners-hero {
+    background: linear-gradient(135deg, var(--green-dark) 0%, #1a4a30 100%);
+    border-radius: 12px;
+    padding: 48px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .partners-hero::before {
+    content: "60";
+    position: absolute; right: -20px; top: -30px;
+    font-family: "Playfair Display", serif;
+    font-size: 180px; font-weight: 700;
+    color: rgba(255,255,255,0.04); line-height: 1;
+    pointer-events: none;
+  }
+  .partner-main-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(212,168,67,0.15);
+    border: 1px solid rgba(212,168,67,0.3);
+    color: var(--gold-light); padding: 4px 14px;
+    border-radius: 20px; font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .partner-main-name {
+    font-family: "Playfair Display", serif;
+    font-size: 2.2rem; color: var(--white);
+    font-weight: 700; margin-bottom: 8px; line-height: 1.1;
+  }
+  .partner-main-sub {
+    color: var(--gold); font-style: italic;
+    font-family: "Playfair Display", serif;
+    font-size: 1rem; margin-bottom: 20px;
+  }
+  .partner-main-desc {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem; line-height: 1.7;
+  }
+  .partner-main-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .partner-stat {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(212,168,67,0.2);
+    border-radius: 8px; padding: 16px;
+    text-align: center;
+  }
+  .partner-stat-num {
+    font-family: "Playfair Display", serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .partner-stat-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.72rem; line-height: 1.4;
+  }
+  .partners-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .partner-card {
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 28px 24px;
+    text-align: center; background: var(--cream);
+    transition: all 0.2s;
+  }
+  .partner-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(45,106,79,0.12);
+  }
+  .partner-card-icon {
+    width: 56px; height: 56px;
+    background: var(--green-pale);
+    border-radius: 50%; display: flex;
+    align-items: center; justify-content: center;
+    margin: 0 auto 16px; font-size: 1.5rem;
+  }
+  .partner-card-name {
+    font-weight: 600; color: var(--green-dark);
+    font-size: 0.95rem; margin-bottom: 6px;
+  }
+  .partner-card-desc {
+    color: var(--text-muted); font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .partner-card-tag {
+    display: inline-block; margin-top: 12px;
+    background: var(--green-dark); color: var(--gold);
+    font-size: 0.65rem; padding: 3px 10px;
+    border-radius: 20px; letter-spacing: 0.08em;
+  }
+  .partner-open-slot {
+    border: 2px dashed var(--border);
+    background: transparent;
+  }
+  .partner-open-slot .partner-card-name { color: var(--text-muted); }
+
+  /* ── PATRONOS ── */
+  .patrons { background: var(--green-dark); }
+  .patrons .section-eyebrow { color: var(--gold-light); }
+  .patrons .section-title { color: var(--white); }
+  .patrons .section-title em { color: var(--green-light); }
+  .patrons .section-desc { color: rgba(255,255,255,0.6); }
+  .patrons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .patron-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(212,168,67,0.2);
+    border-radius: 8px; overflow: hidden;
+    transition: all 0.2s;
+  }
+  .patron-card:hover {
+    border-color: rgba(212,168,67,0.5);
+    transform: translateY(-3px);
+  }
+  .patron-card-img {
+    width: 100%; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #1a3a2a, #0d2018);
+    display: flex; align-items: center;
+    justify-content: center; font-size: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .patron-card-img img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .patron-card-body {
+    padding: 16px;
+  }
+  .patron-card-name {
+    color: var(--white); font-weight: 600;
+    font-size: 0.88rem; margin-bottom: 4px;
+  }
+  .patron-card-area {
+    color: var(--gold); font-size: 0.78rem;
+    font-weight: 600; margin-bottom: 4px;
+  }
+  .patron-card-date {
+    color: rgba(255,255,255,0.35);
+    font-size: 0.7rem;
+  }
+  .patron-empty {
+    border: 2px dashed rgba(212,168,67,0.2);
+    background: transparent;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; padding: 32px 16px;
+    border-radius: 8px; text-align: center;
+    min-height: 180px;
+  }
+  .patron-empty-icon {
+    color: rgba(212,168,67,0.3);
+    font-size: 1.5rem;
+  }
+  .patron-empty-text {
+    color: rgba(255,255,255,0.25);
+    font-size: 0.75rem; line-height: 1.5;
+  }
+  .patrons-cta {
+    text-align: center; margin-top: 40px;
+  }
+
+  @media (max-width: 900px) {
+    .partners-hero { grid-template-columns: 1fr; }
+    .partners-grid { grid-template-columns: 1fr 1fr; }
+    .patrons-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+
+  /* ── HERO SLIDESHOW ── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px;
+  }
+
+  /* Slides container */
+  .hero-slides {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.4s ease-in-out;
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+  }
+
+  /* Each slide has its own overlay tint */
+  .hero-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(10,30,18,0.82) 0%,
+      rgba(10,30,18,0.55) 50%,
+      rgba(10,30,18,0.35) 100%
+    );
+  }
+
+  /* Slide indicators (dots) */
+  .hero-dots {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+
+  .hero-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    border: 1px solid rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .hero-dot.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.3);
+  }
+
+  /* Slide caption */
+  .hero-caption {
+    position: absolute;
+    bottom: 50px;
+    right: 40px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.7rem;
+    font-style: italic;
+    z-index: 10;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── LOGO GREEN DIAMONT ── */
+  .hero-logo-corner {
+    position: absolute;
+    top: 62px;
+    right: 28px;
+    z-index: 10;
+  }
+
+  .hero-logo-corner img {
+    width: 110px;
+    height: auto;
+    filter: drop-shadow(0 2px 12px rgba(0,0,0,0.6));
+    transition: transform 0.3s ease;
+  }
+
+  .hero-logo-corner img:hover {
+    transform: scale(1.05);
+  }
+
+  /* ── HERO CONTENT ── */
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 60px 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* Ken Burns effect on active slide */
+  @keyframes kenburns {
+    0%   { transform: scale(1.0) translateX(0); }
+    100% { transform: scale(1.08) translateX(-1%); }
+  }
+
+  .hero-slide.active {
+    animation: kenburns 8s ease-out forwards;
+    opacity: 1;
+  }
+
+  @media (max-width: 900px) {
+    .hero-logo-corner { top: 60px; right: 16px; }
+    .hero-caption { display: none; }
+    .hero-dots { bottom: 16px; }
+  }
+
+
+  /* ══ CARROSSEL DE VÍDEOS ══ */
+  .hero-carousel {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+
+  .hero-slide.active { opacity: 1; }
+
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Overlay gradient */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      135deg,
+      rgba(10,30,18,0.78) 0%,
+      rgba(10,30,18,0.50) 50%,
+      rgba(10,30,18,0.30) 100%
+    );
+  }
+
+  /* Logo canto superior ESQUERDO */
+  .hero-logo-corner {
+    position: absolute;
+    top: 62px;
+    left: 28px;
+    z-index: 10;
+  }
+
+  .hero-logo-corner img {
+    width: 110px;
+    height: auto;
+    filter: drop-shadow(0 2px 12px rgba(0,0,0,0.7));
+    transition: transform 0.3s ease;
+  }
+
+  .hero-logo-corner img:hover { transform: scale(1.05); }
+
+  /* Dots */
+  .hero-dots {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+
+  .hero-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    border: 1px solid rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .hero-dot.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.3);
+  }
+
+  /* Caption */
+  .hero-caption {
+    position: absolute;
+    bottom: 50px;
+    right: 32px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.68rem;
+    font-style: italic;
+    z-index: 10;
+    letter-spacing: 0.05em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  }
+
+  /* Hero content — full width agora (sem coluna do certificado) */
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  .hero-text { max-width: 640px; }
+
+  @media (max-width: 900px) {
+    .hero-logo-corner { top: 58px; left: 16px; }
+    .hero-logo-corner img { width: 80px; }
+    .hero-caption { display: none; }
+    .hero-dots { bottom: 16px; }
+    .hero-content { padding: 40px 20px; }
+  }
+
+
+  /* Fotos no hero com Ken Burns */
+  .hero-photo-slide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    animation: none;
+  }
+
+  .hero-slide.active .hero-photo-slide {
+    animation: kenburns 9s ease-out forwards;
+  }
+
+  @keyframes kenburns {
+    0%   { transform: scale(1.0) translate(0, 0); }
+    100% { transform: scale(1.08) translate(-1%, -0.5%); }
+  }
+
 </style>
 </head>
 <body>
@@ -1280,19 +1923,68 @@
 </nav>
 
 <!-- ══ HERO ══ -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-pattern"></div>
-  <div class="hero-img-wrap">
-    <img src="images/hero-forest.jpg" alt="Vale dos Ventos — Mata Atlântica">
+<section class="hero" id="home">
+
+  <!-- ══ CARROSSEL: 1 VÍDEO + 4 FOTOS ══ -->
+  <div class="hero-slides" id="heroSlides">
+
+    <!-- SLIDE 1: VÍDEO real — Drone Amanhecer Paredão -->
+    <div class="hero-slide active" data-caption="Amanhecer no Paredão · Vale dos Ventos · Mata Atlântica · SC">
+      <video autoplay muted loop playsinline class="hero-video">
+        <source src="videos/drone-amanhecer.mp4" type="video/mp4">
+        <img src="images/vale-panoramica.jpg" alt="Drone amanhecer paredão" class="hero-photo">
+      </video>
+    </div>
+
+    <!-- SLIDE 2: Foto Drone Pôr do Sol -->
+    <div class="hero-slide" data-caption="Vale dos Ventos · Pôr do sol dourado · Santa Catarina, Brasil">
+      <img src="images/drone-por-do-sol.jpg" alt="Drone pôr do sol" class="hero-photo">
+    </div>
+
+    <!-- SLIDE 3: Foto Drone Floresta Densa -->
+    <div class="hero-slide" data-caption="Mata Atlântica · Vista aérea da floresta densa · 17M m² preservados">
+      <img src="images/drone-floresta-densa.jpg" alt="Drone floresta densa" class="hero-photo">
+    </div>
+
+    <!-- SLIDE 4: Foto Drone Estrada -->
+    <div class="hero-slide" data-caption="Dentro da reserva · Estrada pela Mata Atlântica · Vale dos Ventos">
+      <img src="images/drone-estrada.jpg" alt="Drone estrada floresta" class="hero-photo">
+    </div>
+
+    <!-- SLIDE 5: Foto Panorâmica Vale -->
+    <div class="hero-slide" data-caption="Vista panorâmica do topo da Serra · Vale dos Ventos · SC">
+      <img src="images/vale-panoramica.jpg" alt="Vale dos Ventos panorâmica" class="hero-photo">
+    </div>
+
   </div>
 
+  <!-- Overlay escurecedor -->
+  <div class="hero-overlay"></div>
+
+  <!-- ══ LOGO CANTO SUPERIOR ESQUERDO ══ -->
+  <div class="hero-logo-corner">
+    <img src="images/logo-green-diamont.png" alt="Green Diamont">
+  </div>
+
+  <!-- Dots de navegação -->
+  <div class="hero-dots" id="heroDots">
+    <div class="hero-dot active" onclick="goSlide(0)"></div>
+    <div class="hero-dot" onclick="goSlide(1)"></div>
+    <div class="hero-dot" onclick="goSlide(2)"></div>
+    <div class="hero-dot" onclick="goSlide(3)"></div>
+    <div class="hero-dot" onclick="goSlide(4)"></div>
+  </div>
+
+  <!-- Caption -->
+  <div class="hero-caption" id="heroCaption">Amanhecer no Paredão · Vale dos Ventos · Mata Atlântica · SC</div>
+
+  <!-- ══ CONTEÚDO HERO ══ -->
   <div class="hero-content">
     <div class="hero-text">
       <div class="hero-badge">
         <span data-lang="pt" class="active">Certificado Ambiental Vitalício</span>
-        <span data-lang-inline="en">Lifetime Environmental Certificate</span>
-        <span data-lang-inline="es">Certificado Ambiental Vitalicio</span>
+        <span data-lang="en">Lifetime Environmental Certificate</span>
+        <span data-lang="es">Certificado Ambiental Vitalicio</span>
       </div>
 
       <h1 class="hero-title">
@@ -1326,49 +2018,8 @@
         </a>
       </div>
     </div>
-
-    <!-- CERT PREVIEW CARD -->
-    <div class="hero-cert">
-      <div class="cert-preview">
-        <div class="cert-logo">✦ Green Diamont ✦</div>
-        <div class="cert-diamond">
-          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="30,4 56,20 56,40 30,56 4,40 4,20" fill="none" stroke="#d4a843" stroke-width="1.5"/>
-            <polygon points="30,12 48,22 48,38 30,48 12,38 12,22" fill="rgba(82,183,136,0.15)" stroke="#52b788" stroke-width="1"/>
-            <text x="30" y="35" text-anchor="middle" font-family="serif" font-size="14" fill="#d4a843">GD</text>
-          </svg>
-        </div>
-        <div class="cert-title-sm">
-          <span data-lang="pt" class="active">Certificado de Preservação Ambiental</span>
-          <span data-lang="en">Environmental Preservation Certificate</span>
-          <span data-lang="es">Certificado de Preservación Ambiental</span>
-        </div>
-        <div class="cert-name">Seu Nome Aqui</div>
-        <div class="cert-info">
-          <div class="cert-info-item">
-            <div class="cert-info-label">Área</div>
-            <div class="cert-info-value">1 m²</div>
-          </div>
-          <div class="cert-info-item">
-            <div class="cert-info-label">Bioma</div>
-            <div class="cert-info-value">Mata Atlântica</div>
-          </div>
-          <div class="cert-info-item">
-            <div class="cert-info-label">Rede</div>
-            <div class="cert-info-value">Polygon</div>
-          </div>
-          <div class="cert-info-item">
-            <div class="cert-info-label">Token</div>
-            <div class="cert-info-value">ERC-721</div>
-          </div>
-        </div>
-        <div class="cert-hash">
-          <div class="cert-hash-label">Blockchain Hash</div>
-          <div class="cert-hash-val">0x799Fb383...3161eF</div>
-        </div>
-      </div>
-    </div>
   </div>
+
 </section>
 
 <!-- ══ STATS ══ -->
@@ -1653,11 +2304,18 @@
           <span data-lang="en">Each certificate is a unique token on the Polygon network — the world's most sustainable blockchain — with 99.95% less energy consumption than Bitcoin.</span>
           <span data-lang="es">Cada certificado es un token único en la red Polygon — la blockchain más sostenible del mundo — con 99,95% menos consumo de energía que Bitcoin.</span>
         </p>
-        <a href="https://polygonscan.com/address/0x799Fb383692fc580D32ae77CA00DC72A763161eF" target="_blank" class="btn-primary" style="text-decoration:none">
-          <span data-lang="pt" style="display:inline">Ver no PolygonScan</span>
-          <span data-lang-inline="en">View on PolygonScan</span>
-          <span data-lang-inline="es">Ver en PolygonScan</span>
-        </a>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="https://polygonscan.com/address/0x799Fb383692fc580D32ae77CA00DC72A763161eF" target="_blank" class="btn-primary" style="text-decoration:none">
+            <span data-lang="pt" style="display:inline">Ver no PolygonScan</span>
+            <span data-lang-inline="en">View on PolygonScan</span>
+            <span data-lang-inline="es">Ver en PolygonScan</span>
+          </a>
+          <a href="https://polygonscan.com/token/0x799Fb383692fc580D32ae77CA00DC72A763161eF" target="_blank" class="btn-secondary" style="text-decoration:none;text-align:center;margin-top:0">
+            <span data-lang="pt" style="display:inline">📄 Ver Contrato Oficial do Token</span>
+            <span data-lang-inline="en">📄 View Official Token Contract</span>
+            <span data-lang-inline="es">📄 Ver Contrato Oficial del Token</span>
+          </a>
+        </div>
       </div>
 
       <div class="blockchain-visual">
@@ -1798,6 +2456,28 @@
           </div>
         </div>
       </div>
+      <div class="fauna-card">
+        <img src="images/rastro-anta.jpg" alt="Anta — Rastro real · Vale dos Ventos">
+        <div class="fauna-card-overlay">
+          <div class="fauna-card-name">Anta</div>
+          <div class="fauna-card-status">
+            <span data-lang="pt" style="display:inline">🔴 Vulnerável · Rastro real!</span>
+            <span data-lang="en">🔴 Vulnerable · Real track!</span>
+            <span data-lang="es">🔴 Vulnerable · ¡Rastro real!</span>
+          </div>
+        </div>
+      </div>
+      <div class="fauna-card">
+        <img src="images/fauna-picapau.jpg" alt="Pica-pau — registrado na Vale dos Ventos">
+        <div class="fauna-card-overlay">
+          <div class="fauna-card-name">Pica-pau</div>
+          <div class="fauna-card-status">
+            <span data-lang="pt" style="display:inline">📸 Foto real · Vale dos Ventos</span>
+            <span data-lang="en">📸 Real photo · Vale dos Ventos</span>
+            <span data-lang="es">📸 Foto real · Vale dos Ventos</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1831,7 +2511,11 @@
           <span data-lang="es">✦ PRESERVADOR ✦</span>
         </div>
         <div class="pricing-qty">1 m²</div>
-        <div class="pricing-price">R$ 199</div>
+        <div class="pricing-price">
+          <span data-lang="pt" style="display:inline">R$ 199</span>
+          <span data-lang="en">USD 99</span>
+          <span data-lang="es">€ 89</span>
+        </div>
         <div class="pricing-period">
           <span data-lang="pt" style="display:inline">pagamento único · preservação vitalícia</span>
           <span data-lang="en">one-time payment · lifetime preservation</span>
@@ -1864,7 +2548,11 @@
           <span data-lang="es">✦ GUARDIÁN ✦</span>
         </div>
         <div class="pricing-qty">5 m²</div>
-        <div class="pricing-price">R$ 690</div>
+        <div class="pricing-price">
+          <span data-lang="pt" style="display:inline">R$ 690</span>
+          <span data-lang="en">USD 345</span>
+          <span data-lang="es">€ 299</span>
+        </div>
         <div class="pricing-period">
           <span data-lang="pt" style="display:inline">pagamento único · R$ 138/m² · 5 certificados</span>
           <span data-lang="en">one-time payment · R$ 138/m² · 5 certificates</span>
@@ -1896,9 +2584,13 @@
           <span data-lang="en">Minimum 10 m²</span>
           <span data-lang="es">Mínimo 10 m²</span>
         </div>
-        <div class="pricing-price">R$ 500<span style="font-size:1rem;font-weight:400">/m²</span></div>
+        <div class="pricing-price">
+          <span data-lang="pt" style="display:inline">R$ 500<span style="font-size:1rem;font-weight:400">/m²</span></span>
+          <span data-lang="en">USD 250<span style="font-size:1rem;font-weight:400">/m²</span></span>
+          <span data-lang="es">€ 220<span style="font-size:1rem;font-weight:400">/m²</span></span>
+        </div>
         <div class="pricing-period">
-          <span data-lang="pt" style="display:inline">a partir de R$ 5.000 · solução ESG corporativa</span>
+          <span data-lang="pt" style="display:inline"><span data-lang="pt" style="display:inline">a partir de R$ 5.000 · solução ESG corporativa</span><span data-lang="en">from USD 2,500 · corporate ESG solution</span><span data-lang="es">desde € 2.200 · solución ESG corporativa</span></span>
           <span data-lang="en">from R$ 5,000 · corporate ESG solution</span>
           <span data-lang="es">desde R$ 5.000 · solución ESG corporativa</span>
         </div>
@@ -1915,6 +2607,183 @@
           <span data-lang-inline="es">Convertirse en Patrono</span>
         </a>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ PARCEIROS ══ -->
+<section class="partners" id="parceiros">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <span data-lang="pt" style="display:inline">Quem está por trás da floresta</span>
+      <span data-lang="en">Who's behind the forest</span>
+      <span data-lang="es">Quiénes están detrás del bosque</span>
+    </div>
+    <h2 class="section-title">
+      <span data-lang="pt" style="display:block">Nossos <em>parceiros</em></span>
+      <span data-lang="en">Our <em>partners</em></span>
+      <span data-lang="es">Nuestros <em>socios</em></span>
+    </h2>
+
+    <!-- Vale dos Ventos — destaque principal -->
+    <div class="partners-hero">
+      <div>
+        <div class="partner-main-badge">✦ Fundadora & Guardiã da Floresta</div>
+        <div class="partner-main-name">Vale dos Ventos</div>
+        <div class="partner-main-sub">A origem do Green Diamont</div>
+        <p class="partner-main-desc">
+          <span data-lang="pt" style="display:inline">Empresa familiar fundada há mais de 60 anos no Sul do Brasil. Iniciou como madereira e se transformou na maior guardiã da Mata Atlântica da região. Hoje, a nova geração preserva o que a geração anterior explorou — e monetiza essa preservação de forma sustentável e rastreável.</span>
+          <span data-lang="en">Family company founded over 60 years ago in southern Brazil. Started as a timber company and transformed into the region's largest Atlantic Forest guardian. Today, the new generation preserves what the previous generation explored — monetizing this preservation in a sustainable and traceable way.</span>
+          <span data-lang="es">Empresa familiar fundada hace más de 60 años en el sur de Brasil. Comenzó como maderera y se transformó en la mayor guardiana de la Mata Atlántica de la región.</span>
+        </p>
+      </div>
+      <div class="partner-main-stats">
+        <div class="partner-stat">
+          <div class="partner-stat-num">60+</div>
+          <div class="partner-stat-label">
+            <span data-lang="pt" style="display:inline">Anos de história familiar</span>
+            <span data-lang="en">Years of family history</span>
+            <span data-lang="es">Años de historia familiar</span>
+          </div>
+        </div>
+        <div class="partner-stat">
+          <div class="partner-stat-num">17M</div>
+          <div class="partner-stat-label">
+            <span data-lang="pt" style="display:inline">m² de Mata Atlântica</span>
+            <span data-lang="en">m² of Atlantic Forest</span>
+            <span data-lang="es">m² de Mata Atlántica</span>
+          </div>
+        </div>
+        <div class="partner-stat">
+          <div class="partner-stat-num">300K</div>
+          <div class="partner-stat-label">
+            <span data-lang="pt" style="display:inline">Seguidores Instagram</span>
+            <span data-lang="en">Instagram followers</span>
+            <span data-lang="es">Seguidores Instagram</span>
+          </div>
+        </div>
+        <div class="partner-stat">
+          <div class="partner-stat-num">SC</div>
+          <div class="partner-stat-label">
+            <span data-lang="pt" style="display:inline">Santa Catarina, Brasil</span>
+            <span data-lang="en">Santa Catarina, Brazil</span>
+            <span data-lang="es">Santa Catarina, Brasil</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid parceiros institucionais -->
+    <div class="partners-grid">
+      <div class="partner-card">
+        <div class="partner-card-icon">⛓️</div>
+        <div class="partner-card-name">Polygon Network</div>
+        <p class="partner-card-desc">
+          <span data-lang="pt" style="display:inline">Blockchain utilizada para registrar e certificar cada m² preservado com tecnologia Soulbound NFT.</span>
+          <span data-lang="en">Blockchain used to register and certify each preserved m² with Soulbound NFT technology.</span>
+          <span data-lang="es">Blockchain utilizada para registrar cada m² preservado con tecnología Soulbound NFT.</span>
+        </p>
+        <span class="partner-card-tag">Tecnologia</span>
+      </div>
+      <div class="partner-card">
+        <div class="partner-card-icon">📌</div>
+        <div class="partner-card-name">Pinata · IPFS</div>
+        <p class="partner-card-desc">
+          <span data-lang="pt" style="display:inline">Armazenamento descentralizado dos metadados e imagens de cada certificado emitido.</span>
+          <span data-lang="en">Decentralized storage of metadata and images for each issued certificate.</span>
+          <span data-lang="es">Almacenamiento descentralizado de metadatos e imágenes de cada certificado emitido.</span>
+        </p>
+        <span class="partner-card-tag">Infraestrutura</span>
+      </div>
+      <div class="partner-card partner-open-slot">
+        <div class="partner-card-icon" style="background:var(--border)">+</div>
+        <div class="partner-card-name">
+          <span data-lang="pt" style="display:inline">Seja um Parceiro</span>
+          <span data-lang="en">Become a Partner</span>
+          <span data-lang="es">Sé un Socio</span>
+        </div>
+        <p class="partner-card-desc">
+          <span data-lang="pt" style="display:inline">ONGs, prefeituras, universidades e empresas com foco ambiental são bem-vindos.</span>
+          <span data-lang="en">NGOs, municipalities, universities and environmentally focused companies are welcome.</span>
+          <span data-lang="es">ONGs, municipios, universidades y empresas con enfoque ambiental son bienvenidos.</span>
+        </p>
+        <span class="partner-card-tag" style="background:var(--border);color:var(--text-muted)">
+          <span data-lang="pt" style="display:inline">Em breve</span>
+          <span data-lang="en">Coming soon</span>
+          <span data-lang="es">Próximamente</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PATRONOS ══ -->
+<section class="patrons" id="patronos">
+  <div class="section-inner">
+    <div class="section-eyebrow">
+      <span data-lang="pt" style="display:inline">Hall dos Guardiões da Floresta</span>
+      <span data-lang="en">Hall of Forest Guardians</span>
+      <span data-lang="es">Hall de los Guardianes del Bosque</span>
+    </div>
+    <h2 class="section-title">
+      <span data-lang="pt" style="display:block">Nossos <em>Patronos</em></span>
+      <span data-lang="en">Our <em>Patrons</em></span>
+      <span data-lang="es">Nuestros <em>Patronos</em></span>
+    </h2>
+    <p class="section-desc">
+      <span data-lang="pt" style="display:inline">Empresas e organizações que escolheram preservar áreas maiores e fazer parte da história da Mata Atlântica.</span>
+      <span data-lang="en">Companies and organizations that chose to preserve larger areas and be part of the Atlantic Forest's history.</span>
+      <span data-lang="es">Empresas y organizaciones que eligieron preservar áreas mayores y ser parte de la historia de la Mata Atlántica.</span>
+    </p>
+
+    <div class="patrons-grid">
+      <!-- Slots vazios esperando os primeiros patronos -->
+      <div class="patron-empty">
+        <div class="patron-empty-icon">🏆</div>
+        <div class="patron-empty-text">
+          <span data-lang="pt" style="display:inline">Primeira empresa a se tornar Patrono</span>
+          <span data-lang="en">First company to become a Patron</span>
+          <span data-lang="es">Primera empresa en convertirse en Patrono</span>
+        </div>
+      </div>
+      <div class="patron-empty">
+        <div class="patron-empty-icon">🌿</div>
+        <div class="patron-empty-text">
+          <span data-lang="pt" style="display:inline">Seu logo aqui — a partir de 10m²</span>
+          <span data-lang="en">Your logo here — from 10m²</span>
+          <span data-lang="es">Tu logo aquí — desde 10m²</span>
+        </div>
+      </div>
+      <div class="patron-empty">
+        <div class="patron-empty-icon">🌿</div>
+        <div class="patron-empty-text">
+          <span data-lang="pt" style="display:inline">Seu logo aqui — a partir de 10m²</span>
+          <span data-lang="en">Your logo here — from 10m²</span>
+          <span data-lang="es">Tu logo aquí — desde 10m²</span>
+        </div>
+      </div>
+      <div class="patron-empty">
+        <div class="patron-empty-icon">🌿</div>
+        <div class="patron-empty-text">
+          <span data-lang="pt" style="display:inline">Seu logo aqui — a partir de 10m²</span>
+          <span data-lang="en">Your logo here — from 10m²</span>
+          <span data-lang="es">Tu logo aquí — desde 10m²</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="patrons-cta">
+      <p style="color:rgba(255,255,255,0.5);font-size:0.88rem;margin-bottom:20px;">
+        <span data-lang="pt" style="display:inline">Torne sua empresa um Patrono — R$ 500/m² · mínimo 10m² · relatório ESG incluso</span>
+        <span data-lang="en">Make your company a Patron — R$ 500/m² · minimum 10m² · ESG report included</span>
+        <span data-lang="es">Haz de tu empresa un Patrono — R$ 500/m² · mínimo 10m² · informe ESG incluido</span>
+      </p>
+      <a href="#contact" class="btn-primary">
+        <span data-lang="pt" style="display:inline">Quero ser Patrono</span>
+        <span data-lang-inline="en">I want to be a Patron</span>
+        <span data-lang-inline="es">Quiero ser Patrono</span>
+      </a>
     </div>
   </div>
 </section>
@@ -2140,6 +3009,8 @@
             <span data-lang="es">Cómo funciona</span>
           </a></li>
           <li><a href="#certificate">Certificado</a></li>
+          <li><a href="#parceiros"><span data-lang="pt" style="display:inline">Parceiros</span><span data-lang="en">Partners</span><span data-lang="es">Socios</span></a></li>
+          <li><a href="#patronos">Patronos</a></li>
           <li><a href="#pricing">
             <span data-lang="pt" style="display:inline">Preços</span>
             <span data-lang="en">Pricing</span>
@@ -2257,6 +3128,57 @@ function toggleFaq(btn) {
 }
 
 setLang('pt');
+
+// ── HERO CARROSSEL DE VÍDEOS ──
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.hero-dot');
+const caption = document.getElementById('heroCaption');
+
+function activateSlide(n) {
+  const prev = slides[currentSlide];
+  const prevVid = prev.querySelector('video');
+  if (prevVid) prevVid.pause();
+  prev.classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+
+  currentSlide = (n + slides.length) % slides.length;
+  const curr = slides[currentSlide];
+  const currVid = curr.querySelector('video');
+  curr.classList.add('active');
+  dots[currentSlide].classList.add('active');
+  if (currVid) { currVid.currentTime = 0; currVid.play().catch(()=>{}); }
+  if (caption) caption.textContent = curr.getAttribute('data-caption') || '';
+}
+
+function goSlide(n) { activateSlide(n); resetTimer(); }
+function nextSlide() { activateSlide(currentSlide + 1); }
+
+let slideTimer = setInterval(nextSlide, 9000);
+function resetTimer() { clearInterval(slideTimer); slideTimer = setInterval(nextSlide, 9000); }
+
+// Pause/play on visibility
+document.addEventListener('visibilitychange', () => {
+  const vid = slides[currentSlide].querySelector('video');
+  if (!vid) return;
+  document.hidden ? vid.pause() : vid.play().catch(()=>{});
+});
+
+// Swipe mobile
+let tx = 0;
+const heroEl = document.querySelector('.hero');
+if (heroEl) {
+  heroEl.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+  heroEl.addEventListener('touchend', e => {
+    const d = tx - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 50) d > 0 ? (activateSlide(currentSlide+1), resetTimer()) : (activateSlide(currentSlide-1), resetTimer());
+  });
+}
+
+// Init first video
+const firstVid = slides[0].querySelector('video');
+if (firstVid) firstVid.play().catch(()=>{});
+
 </script>
 </body>
 </html>
