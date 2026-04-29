@@ -1295,7 +1295,7 @@
   [data-lang-inline] { display: none; }
   [data-lang-inline].active { display: inline; }
 
-  /* ── FAUNA ── */
+  /* ══ FAUNA ══ */
   .fauna {
     background: var(--green-dark);
     padding: 90px 40px;
@@ -1317,21 +1317,7 @@
     overflow: hidden;
     aspect-ratio: 3/4;
     cursor: pointer;
-  }
-
-  .fauna-card img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-
-  .fauna-card:hover img { transform: scale(1.06); }
-
-  .fauna-card-overlay {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(transparent, rgba(10,30,18,0.85));
-    padding: 40px 16px 16px;
+    background: var(--green-dark);
   }
 
   .fauna-card-name {
@@ -1346,6 +1332,58 @@
     color: var(--gold-light);
     font-size: 0.72rem;
     letter-spacing: 0.08em;
+  }
+
+  /* Carrossel dentro dos cards */
+  .fc-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .fc-wrap img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.0s ease-in-out;
+  }
+
+  .fc-wrap img.fca { opacity: 1; }
+
+  .fauna-card-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(10,30,18,0.85));
+    padding: 40px 16px 16px;
+    z-index: 3;
+  }
+
+  .fc-dots {
+    position: absolute;
+    bottom: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+    z-index: 4;
+  }
+
+  .fc-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.6);
+    display: inline-block;
+    transition: all 0.3s;
+  }
+
+  .fc-dot.on {
+    background: var(--gold);
+    border-color: var(--gold);
   }
 
   @media (max-width: 900px) {
@@ -1881,6 +1919,54 @@
     100% { transform: scale(1.08) translate(-1%, -0.5%); }
   }
 
+
+  /* ── FAUNA CARD CARROSSEL ── */
+  .fauna-card-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .fauna-card-carousel img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+
+  .fauna-card-carousel img.fc-active {
+    opacity: 1;
+  }
+
+  .fauna-card-nav {
+    position: absolute;
+    bottom: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+    z-index: 5;
+  }
+
+  .fauna-card-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .fauna-card-dot.active {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
 </style>
 </head>
 <body>
@@ -2359,8 +2445,19 @@
     </p>
 
     <div class="fauna-grid">
+
+      <!-- ── PUMA: 3 fotos ── -->
       <div class="fauna-card">
-        <img src="images/fauna-puma.jpg" alt="Puma — Mata Atlântica">
+        <div class="fc-wrap" id="fc0">
+          <img src="images/fauna-puma.jpg"   alt="Puma" class="fca">
+          <img src="images/fauna-puma-2.jpg" alt="Puma 2">
+          <img src="images/fauna-puma-3.jpg" alt="Puma 3">
+        </div>
+        <div class="fc-dots" id="fd0">
+          <span class="fc-dot on"></span>
+          <span class="fc-dot"></span>
+          <span class="fc-dot"></span>
+        </div>
         <div class="fauna-card-overlay">
           <div class="fauna-card-name">Puma</div>
           <div class="fauna-card-status">
@@ -2370,8 +2467,15 @@
           </div>
         </div>
       </div>
+
+      <!-- ── JAGUATIRICA: 1 foto (aguardando mais) ── -->
       <div class="fauna-card">
-        <img src="images/fauna-oncinha.jpg" alt="Jaguatirica — Mata Atlântica">
+        <div class="fc-wrap" id="fc1">
+          <img src="images/fauna-oncinha.jpg" alt="Jaguatirica" class="fca">
+        </div>
+        <div class="fc-dots" id="fd1">
+          <span class="fc-dot on"></span>
+        </div>
         <div class="fauna-card-overlay">
           <div class="fauna-card-name">Jaguatirica</div>
           <div class="fauna-card-status">
@@ -2381,8 +2485,17 @@
           </div>
         </div>
       </div>
+
+      <!-- ── QUATI: 2 fotos ── -->
       <div class="fauna-card">
-        <img src="images/fauna-quati.jpg" alt="Quati — Mata Atlântica">
+        <div class="fc-wrap" id="fc2">
+          <img src="images/fauna-quati.jpg"   alt="Quati" class="fca">
+          <img src="images/fauna-quati-2.jpg" alt="Quati 2">
+        </div>
+        <div class="fc-dots" id="fd2">
+          <span class="fc-dot on"></span>
+          <span class="fc-dot"></span>
+        </div>
         <div class="fauna-card-overlay">
           <div class="fauna-card-name">Quati</div>
           <div class="fauna-card-status">
@@ -2392,39 +2505,77 @@
           </div>
         </div>
       </div>
+
+      <!-- ── ANTA: 3 fotos (2 reais + rastro) ── -->
       <div class="fauna-card">
-        <img src="images/fauna-capivara.jpg" alt="Capivara — Mata Atlântica">
-        <div class="fauna-card-overlay">
-          <div class="fauna-card-name">Capivara</div>
-          <div class="fauna-card-status">
-            <span data-lang="pt" style="display:inline">🟢 Nativa</span>
-            <span data-lang="en">🟢 Native</span>
-            <span data-lang="es">🟢 Nativa</span>
-          </div>
+        <div class="fc-wrap" id="fc3">
+          <img src="images/fauna-anta.jpg"   alt="Anta" class="fca">
+          <img src="images/fauna-anta-2.jpg" alt="Anta 2">
+          <img src="images/rastro-anta.jpg"  alt="Rastro de Anta">
         </div>
-      </div>
-      <div class="fauna-card">
-        <img src="images/rastro-anta.jpg" alt="Anta — Rastro real · Vale dos Ventos">
+        <div class="fc-dots" id="fd3">
+          <span class="fc-dot on"></span>
+          <span class="fc-dot"></span>
+          <span class="fc-dot"></span>
+        </div>
         <div class="fauna-card-overlay">
           <div class="fauna-card-name">Anta</div>
           <div class="fauna-card-status">
-            <span data-lang="pt" style="display:inline">🔴 Vulnerável · Rastro real!</span>
-            <span data-lang="en">🔴 Vulnerable · Real track!</span>
-            <span data-lang="es">🔴 Vulnerable · ¡Rastro real!</span>
+            <span data-lang="pt" style="display:inline">🔴 Vulnerável</span>
+            <span data-lang="en">🔴 Vulnerable</span>
+            <span data-lang="es">🔴 Vulnerable</span>
           </div>
         </div>
       </div>
+
+      <!-- ── JACUTINGA: 2 fotos ── -->
       <div class="fauna-card">
-        <img src="images/fauna-picapau.jpg" alt="Pica-pau — registrado na Vale dos Ventos">
+        <div class="fc-wrap" id="fc4">
+          <img src="images/fauna-jacutinga.jpg"   alt="Jacutinga" class="fca">
+          <img src="images/fauna-jacutinga-2.jpg" alt="Jacutinga 2">
+        </div>
+        <div class="fc-dots" id="fd4">
+          <span class="fc-dot on"></span>
+          <span class="fc-dot"></span>
+        </div>
         <div class="fauna-card-overlay">
-          <div class="fauna-card-name">Pica-pau</div>
+          <div class="fauna-card-name">Jacutinga</div>
           <div class="fauna-card-status">
-            <span data-lang="pt" style="display:inline">📸 Foto real · Vale dos Ventos</span>
-            <span data-lang="en">📸 Real photo · Vale dos Ventos</span>
-            <span data-lang="es">📸 Foto real · Vale dos Ventos</span>
+            <span data-lang="pt" style="display:inline">🔴 Criticamente Ameaçada</span>
+            <span data-lang="en">🔴 Critically Endangered</span>
+            <span data-lang="es">🔴 En Peligro Crítico</span>
           </div>
         </div>
       </div>
+
+      <!-- ── MATA ATLÂNTICA: 6 fotos (3 drone + 3 floresta) ── -->
+      <div class="fauna-card">
+        <div class="fc-wrap" id="fc5">
+          <img src="images/drone-por-do-sol.jpg"     alt="Mata Atlântica" class="fca">
+          <img src="images/drone-floresta-densa.jpg" alt="Mata Atlântica">
+          <img src="images/drone-estrada.jpg"        alt="Mata Atlântica">
+          <img src="images/mata-atlantica.jpg"       alt="Mata Atlântica">
+          <img src="images/mata-atlantica-2.jpg"     alt="Mata Atlântica">
+          <img src="images/mata-atlantica-3.jpg"     alt="Mata Atlântica">
+        </div>
+        <div class="fc-dots" id="fd5">
+          <span class="fc-dot on"></span>
+          <span class="fc-dot"></span>
+          <span class="fc-dot"></span>
+          <span class="fc-dot"></span>
+          <span class="fc-dot"></span>
+          <span class="fc-dot"></span>
+        </div>
+        <div class="fauna-card-overlay">
+          <div class="fauna-card-name">Mata Atlântica</div>
+          <div class="fauna-card-status">
+            <span data-lang="pt" style="display:inline">🌿 17M m² preservados</span>
+            <span data-lang="en">🌿 17M m² preserved</span>
+            <span data-lang="es">🌿 17M m² preservados</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -3113,6 +3264,45 @@ setLang('pt');
 
   // Expose for dot clicks
   window.goSlide = function(n){ show(n); clearInterval(t); t = setInterval(function(){ show(cur+1); }, 9000); };
+})();
+
+
+
+
+// ══ FAUNA CARD CARROSSÉIS ══
+(function(){
+  var CARDS = [
+    { w:'fc0', d:'fd0', ms:5000 },
+    { w:'fc1', d:'fd1', ms:5500 },
+    { w:'fc2', d:'fd2', ms:5000 },
+    { w:'fc3', d:'fd3', ms:4500 },
+    { w:'fc4', d:'fd4', ms:5000 },
+    { w:'fc5', d:'fd5', ms:3500 },
+  ];
+
+  CARDS.forEach(function(cfg){
+    var wrap = document.getElementById(cfg.w);
+    var dBox = document.getElementById(cfg.d);
+    if(!wrap) return;
+
+    var imgs = Array.prototype.slice.call(wrap.querySelectorAll('img'));
+    if(imgs.length <= 1) return;
+
+    var dots = dBox ? Array.prototype.slice.call(dBox.querySelectorAll('.fc-dot')) : [];
+    var cur = 0;
+
+    function go(n){
+      imgs[cur].classList.remove('fca');
+      if(dots[cur]) dots[cur].classList.remove('on');
+      cur = (n + imgs.length) % imgs.length;
+      imgs[cur].classList.add('fca');
+      if(dots[cur]) dots[cur].classList.add('on');
+    }
+
+    setTimeout(function(){
+      setInterval(function(){ go(cur+1); }, cfg.ms);
+    }, cfg.ms);
+  });
 })();
 
 </script>
