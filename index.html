@@ -3639,5 +3639,133 @@ setLang('pt');
   </div>
 </div>
 
+
+<script>
+// ══ MODAL PRÉ-PAGAMENTO GREEN DIAMONT ══
+var _modalPlan = '';
+var _modalLink = '';
+
+var PLAN_LABELS = {
+  preservador: '✦ PRESERVADOR ✦ — R$ 199',
+  guardiao:    '✦ GUARDIÃO ✦ — R$ 690',
+  patrono:     '✦ PATRONO ESG ✦ — R$ 500/m²'
+};
+
+var PLAN_SUBTITLES = {
+  preservador: '1m² de Mata Atlântica · Certificado nominal vitalício',
+  guardiao:    '5m² de Mata Atlântica · 5 certificados personalizáveis',
+  patrono:     'Mínimo 10m² · Relatório ESG · Logo nos certificados'
+};
+
+function openModal(plan, link) {
+  _modalPlan = plan;
+  _modalLink = link;
+
+  document.getElementById('modalPlanBadge').textContent = PLAN_LABELS[plan] || plan;
+  document.getElementById('modalSubtitle').textContent  = PLAN_SUBTITLES[plan] || '';
+
+  var isPJ = (plan === 'patrono');
+  document.getElementById('formPF').style.display = isPJ ? 'none' : 'block';
+  document.getElementById('formPJ').style.display = isPJ ? 'block' : 'none';
+
+  document.getElementById('modalTerms').checked = false;
+  document.getElementById('modalError').style.display = 'none';
+  document.getElementById('modalError').textContent = '';
+
+  document.getElementById('payModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('payModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var overlay = document.getElementById('payModal');
+  if (overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeModal();
+    });
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+function showModalError(msg) {
+  var el = document.getElementById('modalError');
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function submitForm() {
+  document.getElementById('modalError').style.display = 'none';
+
+  if (!document.getElementById('modalTerms').checked) {
+    showModalError('Por favor, aceite os Termos de Uso para continuar.');
+    return;
+  }
+
+  var data = {};
+
+  if (_modalPlan === 'patrono') {
+    var empresa  = document.getElementById('pj_empresa').value.trim();
+    var email    = document.getElementById('pj_email').value.trim();
+    var cnpj     = document.getElementById('pj_cnpj').value.trim();
+    var endereco = document.getElementById('pj_endereco').value.trim();
+    var cidade   = document.getElementById('pj_cidade').value.trim();
+
+    if (!empresa || !email || !cnpj || !endereco || !cidade) {
+      showModalError('Por favor, preencha todos os campos obrigatórios (*).');
+      return;
+    }
+    if (email.indexOf('@') < 0) {
+      showModalError('Por favor, insira um email válido.');
+      return;
+    }
+    data = { tipo:'PJ', plano:'patrono', empresa:empresa, email:email,
+             cnpj:cnpj, endereco:endereco, cidade:cidade };
+  } else {
+    var nome     = document.getElementById('pf_nome').value.trim();
+    var email    = document.getElementById('pf_email').value.trim();
+    var cpf      = document.getElementById('pf_cpf').value.trim();
+    var endereco = document.getElementById('pf_endereco').value.trim();
+    var cidade   = document.getElementById('pf_cidade').value.trim();
+
+    if (!nome || !email || !cpf || !endereco || !cidade) {
+      showModalError('Por favor, preencha todos os campos obrigatórios (*).');
+      return;
+    }
+    if (email.indexOf('@') < 0) {
+      showModalError('Por favor, insira um email válido.');
+      return;
+    }
+    data = { tipo:'PF', plano:_modalPlan, nome:nome, email:email,
+             cpf:cpf, endereco:endereco, cidade:cidade };
+  }
+
+  sessionStorage.setItem('gd_buyer', JSON.stringify(data));
+
+  var stripeUrl = _modalLink;
+  var emailVal  = data.email || '';
+
+  if (emailVal) {
+    stripeUrl += (stripeUrl.indexOf('?') >= 0 ? '&' : '?') +
+                 'prefilled_email=' + encodeURIComponent(emailVal);
+  }
+
+  try {
+    var refId = btoa(unescape(encodeURIComponent(JSON.stringify(data)))).substring(0, 200);
+    stripeUrl += '&client_reference_id=' + encodeURIComponent(refId);
+  } catch(e) {}
+
+  closeModal();
+  window.location.href = stripeUrl;
+}
+</script>
+
 </body>
 </html>
