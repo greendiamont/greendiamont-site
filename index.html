@@ -3584,6 +3584,49 @@ setLang('pt');
       </div>
     </div>
 
+
+    <!-- FORMULÁRIO GUARDIÃO (até 5 nomes) -->
+    <div id="formGuardiao" style="display:none">
+      <div class="modal-field">
+        <label>Email do responsável <span>*</span></label>
+        <input type="email" id="g_email" placeholder="seu@email.com">
+      </div>
+      <div class="modal-field">
+        <label>CPF / Passaporte <span>*</span></label>
+        <input type="text" id="g_cpf" placeholder="000.000.000-00 ou nº do passaporte">
+      </div>
+      <div class="modal-field">
+        <label>Endereço completo <span>*</span></label>
+        <input type="text" id="g_endereco" placeholder="Rua, número, complemento">
+      </div>
+      <div class="modal-field">
+        <label>Cidade / Estado / País <span>*</span></label>
+        <input type="text" id="g_cidade" placeholder="Ex: Blumenau / SC / Brasil">
+      </div>
+      <div style="background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;">
+        <p style="font-size:0.82rem;font-weight:600;color:var(--green-dark);margin-bottom:10px;">Como deseja emitir os certificados?</p>
+        <label style="display:flex;gap:8px;cursor:pointer;margin-bottom:8px;font-size:0.82rem;color:var(--text-dark);">
+          <input type="radio" name="g_tipo" value="individual" checked onchange="toggleGuardiaoTipo(this.value)" style="margin-top:3px;">
+          <span><strong>5 certificados individuais</strong> — cada 1m² com um nome diferente</span>
+        </label>
+        <label style="display:flex;gap:8px;cursor:pointer;font-size:0.82rem;color:var(--text-dark);">
+          <input type="radio" name="g_tipo" value="unificado" onchange="toggleGuardiaoTipo(this.value)" style="margin-top:3px;">
+          <span><strong>1 certificado unificado de 5m²</strong> — tudo em um único certificado</span>
+        </label>
+      </div>
+      <div id="guardiaoNomes">
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Nomes para cada certificado:</p>
+        <div class="modal-field"><label>Certificado 1 — Nome <span>*</span></label><input type="text" id="g_nome1" placeholder="Nome do titular 1"></div>
+        <div class="modal-field"><label>Certificado 2 — Nome</label><input type="text" id="g_nome2" placeholder="Nome do titular 2 (opcional)"></div>
+        <div class="modal-field"><label>Certificado 3 — Nome</label><input type="text" id="g_nome3" placeholder="Nome do titular 3 (opcional)"></div>
+        <div class="modal-field"><label>Certificado 4 — Nome</label><input type="text" id="g_nome4" placeholder="Nome do titular 4 (opcional)"></div>
+        <div class="modal-field"><label>Certificado 5 — Nome</label><input type="text" id="g_nome5" placeholder="Nome do titular 5 (opcional)"></div>
+      </div>
+      <div id="guardiaoUnificado" style="display:none">
+        <div class="modal-field"><label>Nome no certificado unificado <span>*</span></label><input type="text" id="g_nomeUnico" placeholder="Ex: Família Silva"></div>
+      </div>
+    </div>
+
     <!-- FORMULÁRIO PESSOA JURÍDICA (Patrono) -->
     <div id="formPJ" style="display:none">
       <div class="modal-field">
@@ -3645,6 +3688,11 @@ setLang('pt');
 var _modalPlan = '';
 var _modalLink = '';
 
+function toggleGuardiaoTipo(tipo) {
+  document.getElementById('guardiaoNomes').style.display     = tipo === 'individual' ? 'block' : 'none';
+  document.getElementById('guardiaoUnificado').style.display = tipo === 'unificado'  ? 'block' : 'none';
+}
+
 var PLAN_LABELS = {
   preservador: '✦ PRESERVADOR ✦ — R$ 199',
   guardiao:    '✦ GUARDIÃO ✦ — R$ 690',
@@ -3664,9 +3712,9 @@ function openModal(plan, link) {
   document.getElementById('modalPlanBadge').textContent = PLAN_LABELS[plan] || plan;
   document.getElementById('modalSubtitle').textContent  = PLAN_SUBTITLES[plan] || '';
 
-  var isPJ = (plan === 'patrono');
-  document.getElementById('formPF').style.display = isPJ ? 'none' : 'block';
-  document.getElementById('formPJ').style.display = isPJ ? 'block' : 'none';
+  document.getElementById('formPF').style.display       = (plan === 'preservador') ? 'block' : 'none';
+  document.getElementById('formGuardiao').style.display = (plan === 'guardiao')    ? 'block' : 'none';
+  document.getElementById('formPJ').style.display       = (plan === 'patrono')     ? 'block' : 'none';
 
   document.getElementById('modalTerms').checked = false;
   document.getElementById('modalError').style.display = 'none';
@@ -3728,6 +3776,35 @@ function submitForm() {
     }
     data = { tipo:'PJ', plano:'patrono', empresa:empresa, email:email,
              cnpj:cnpj, endereco:endereco, cidade:cidade };
+  } else if (_modalPlan === 'guardiao') {
+    var email    = document.getElementById('g_email').value.trim();
+    var cpf      = document.getElementById('g_cpf').value.trim();
+    var endereco = document.getElementById('g_endereco').value.trim();
+    var cidade   = document.getElementById('g_cidade').value.trim();
+    var tipoG    = document.querySelector('input[name="g_tipo"]:checked').value;
+    if (!email || !cpf || !endereco || !cidade) {
+      showModalError('Por favor, preencha todos os campos obrigatórios (*).');
+      return;
+    }
+    if (email.indexOf('@') < 0) { showModalError('Por favor, insira um email válido.'); return; }
+    if (tipoG === 'unificado') {
+      var nomeUnico = document.getElementById('g_nomeUnico').value.trim();
+      if (!nomeUnico) { showModalError('Por favor, informe o nome para o certificado unificado.'); return; }
+      data = { tipo:'PF', plano:'guardiao', modalidade:'unificado',
+               nome:nomeUnico, email:email, cpf:cpf, endereco:endereco, cidade:cidade, area_m2:5 };
+    } else {
+      var nome1 = document.getElementById('g_nome1').value.trim();
+      if (!nome1) { showModalError('Por favor, informe ao menos o nome do Certificado 1.'); return; }
+      data = { tipo:'PF', plano:'guardiao', modalidade:'individual',
+               nome:nome1, email:email, cpf:cpf, endereco:endereco, cidade:cidade,
+               nomes:[
+                 nome1,
+                 document.getElementById('g_nome2').value.trim() || nome1,
+                 document.getElementById('g_nome3').value.trim() || nome1,
+                 document.getElementById('g_nome4').value.trim() || nome1,
+                 document.getElementById('g_nome5').value.trim() || nome1
+               ]};
+    }
   } else {
     var nome     = document.getElementById('pf_nome').value.trim();
     var email    = document.getElementById('pf_email').value.trim();
