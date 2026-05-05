@@ -3790,7 +3790,7 @@ function submitForm() {
   }
 
   try {
-    var refId = btoa(unescape(encodeURIComponent(JSON.stringify(data)))).substring(0, 200);
+    var refId = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
     stripeUrl += '&client_reference_id=' + encodeURIComponent(refId);
   } catch(e) {}
 
