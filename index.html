@@ -3779,25 +3779,31 @@ function submitForm() {
              cpf:cpf, endereco:endereco, cidade:cidade };
   }
 
-  sessionStorage.setItem('gd_buyer', JSON.stringify(data));
+ sessionStorage.setItem('gd_buyer', JSON.stringify(data));
 
-  var stripeUrl = _modalLink;
-  var emailVal  = data.email || '';
+  var btn = document.getElementById('modalSubmit');
+  btn.disabled = true;
+  btn.textContent = 'Aguarde...';
 
-  if (emailVal) {
-    stripeUrl += (stripeUrl.indexOf('?') >= 0 ? '&' : '?') +
-                 'prefilled_email=' + encodeURIComponent(emailVal);
-  }
-
-  try {
-    var refId = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-    stripeUrl += '&client_reference_id=' + encodeURIComponent(refId);
-  } catch(e) {}
-
-  closeModal();
-  window.location.href = stripeUrl;
+  fetch('https://green-diamont-backend-production.up.railway.app/criar-checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(result) {
+    if (result.url) {
+      closeModal();
+      window.location.href = result.url;
+    } else {
+      showModalError('Erro: ' + (result.erro || 'Tente novamente.'));
+      btn.disabled = false;
+      btn.textContent = 'Continuar para pagamento →';
+    }
+  })
+  .catch(function(err) {
+    showModalError('Erro de conexao. Tente novamente.');
+    btn.disabled = false;
+    btn.textContent = 'Continuar para pagamento →';
+  });
 }
-</script>
-
-</body>
-</html>
