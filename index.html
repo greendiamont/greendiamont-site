@@ -3785,7 +3785,7 @@ function submitForm() {
   btn.disabled = true;
   btn.textContent = 'Aguarde...';
 
-  fetch('/api/criar-checkout', {
+  fetch(fetch('https://greendiamont.com/criar-checkout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
