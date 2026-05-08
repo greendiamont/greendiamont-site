@@ -1,19 +1,13 @@
 // api/criar-checkout.js — Vercel Serverless Function
-// Proxy para o backend Railway contornando o Host allowlist
+// CORRIGIDO: client_reference_id comprimido para max 200 chars
 
 export default async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ erro: 'Metodo nao permitido' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ erro: 'Metodo nao permitido' });
 
   try {
     var Stripe = require('stripe');
@@ -41,7 +35,26 @@ export default async function handler(req, res) {
       return res.json({ url: LINKS[data.plano] || LINKS.preservador });
     }
 
-    var refId = Buffer.from(JSON.stringify(data), 'utf-8').toString('base64');
+    // Comprimir dados para caber em 200 chars
+    // Usar formato compacto em vez de JSON completo
+    var compact = {
+      p:  data.plano,
+      e:  data.email,
+      n:  (data.nome     || data.empresa || '').substring(0, 40),
+      c:  (data.cpf      || data.cnpj    || '').substring(0, 20),
+      en: (data.endereco || '').substring(0, 30),
+      ci: (data.cidade   || '').substring(0, 20),
+      m:  data.modalidade || 'individual',
+      ns: data.nomes ? data.nomes.map(function(n){ return (n||'').substring(0,20); }) : []
+    };
+
+    var refId = Buffer.from(JSON.stringify(compact), 'utf-8').toString('base64');
+
+    // Se ainda passar de 500 chars, truncar nomes
+    if (refId.length > 500) {
+      compact.ns = compact.ns.slice(0, 3);
+      refId = Buffer.from(JSON.stringify(compact), 'utf-8').toString('base64');
+    }
 
     var session = await stripe.checkout.sessions.create({
       mode:                'payment',
@@ -51,14 +64,17 @@ export default async function handler(req, res) {
       success_url: 'https://greendiamont.com/?sucesso=1',
       cancel_url:  'https://greendiamont.com/#pricing',
       metadata: {
-        plano:  data.plano,
-        nome:   data.nome    || data.empresa || '',
-        email:  data.email,
-        cpf:    data.cpf     || data.cnpj   || ''
+        plano:      data.plano,
+        nome:       (data.nome || data.empresa || '').substring(0, 40),
+        email:      data.email.substring(0, 40),
+        cpf:        (data.cpf || data.cnpj || '').substring(0, 20),
+        modalidade: data.modalidade || 'individual',
+        endereco:   (data.endereco || '').substring(0, 40),
+        cidade:     (data.cidade   || '').substring(0, 40)
       }
     });
 
-    console.log('[Vercel] Checkout criado: ' + session.id + ' | ' + data.plano);
+    console.log('[Vercel] Checkout: ' + session.id + ' | ' + data.plano + ' | refId: ' + refId.length + ' chars');
     return res.json({ url: session.url, sessionId: session.id });
 
   } catch (err) {
